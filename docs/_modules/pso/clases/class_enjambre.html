@@ -1,0 +1,800 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pso.clases.class_enjambre &mdash; Optimización PSO 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Optimización PSO
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tabla de contenidos:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../pso.introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pso.codigo.html">Código Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pso.ejemplos.html">Ejemplos</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Optimización PSO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pso.clases.class_enjambre</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pso.clases.class_enjambre</h1><div class="highlight"><pre>
+<span></span><span class="c1">################################################################################</span>
+<span class="c1">#                              CLASE ENJAMBRE (SWARM)                          #</span>
+<span class="c1">################################################################################</span>
+
+<div class="viewcode-block" id="Enjambre"><a class="viewcode-back" href="../../../pso.codigo.html#pso.clases.class_enjambre.Enjambre">[docs]</a><span class="k">class</span> <span class="nc">Enjambre</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Esta clase crea un enjambre de n partículas. El rango de posibles valores</span>
+<span class="sd">    para cada variable (posición) puede estar acotado.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_particulas :`int`</span>
+<span class="sd">        número de partículas del enjambre.</span>
+
+<span class="sd">    n_variables : `int`</span>
+<span class="sd">        número de variables que definen la posición de las partícula.</span>
+
+<span class="sd">    limites_inf : `list` or `numpy.ndarray`</span>
+<span class="sd">        límite inferior de cada variable. Si solo se quiere predefinir límites</span>
+<span class="sd">        de alguna variable, emplear ``None``. Los ``None`` serán remplazados por</span>
+<span class="sd">        el valor (-10**3).</span>
+
+<span class="sd">    limites_sup : `list` or `numpy.ndarray`</span>
+<span class="sd">        límite superior de cada variable. Si solo se quiere predefinir límites</span>
+<span class="sd">        de alguna variable, emplear ``None``. Los``None`` serán remplazados por</span>
+<span class="sd">        el valor (+10**3).</span>
+
+<span class="sd">    verbose : `bool`, optional</span>
+<span class="sd">        mostrar información de la partícula creada. (default is ``False``)</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    partículas : `list`</span>
+<span class="sd">        lista con todas las partículas del enjambre.</span>
+<span class="sd">    </span>
+<span class="sd">    n_particulas :`int`</span>
+<span class="sd">        número de partículas del enjambre.</span>
+
+<span class="sd">    n_variables : `int`</span>
+<span class="sd">        número de variables que definen la posición de las partícula.</span>
+
+<span class="sd">    limites_inf : `list` or `numpy.ndarray`</span>
+<span class="sd">        límite inferior de cada variable.</span>
+
+<span class="sd">    limites_sup : `list` or `numpy.ndarray`</span>
+<span class="sd">        límite superior de cada variable.</span>
+
+<span class="sd">    mejor_particula : `object particula`</span>
+<span class="sd">        la mejor partícula del enjambre en estado actual.</span>
+
+<span class="sd">    mejor_valor : `floar`</span>
+<span class="sd">        el mejor valor del enjambre en su estado actual.</span>
+
+<span class="sd">    historico_particulas : `list`</span>
+<span class="sd">        lista con el estado de las partículas en cada una de las iteraciones que</span>
+<span class="sd">        ha tenido el enjambre.</span>
+
+<span class="sd">    historico_mejor_posicion : `list`</span>
+<span class="sd">        lista con la mejor posición en cada una de las iteraciones que ha tenido</span>
+<span class="sd">        el enjambre.</span>
+
+<span class="sd">    historico_mejor_valor : `list`</span>
+<span class="sd">        lista con el mejor valor en cada una de las iteraciones que ha tenido el</span>
+<span class="sd">        enjambre.</span>
+
+<span class="sd">    diferencia_abs : `list`</span>
+<span class="sd">        diferencia absoluta entre el mejor valor de iteraciones consecutivas.</span>
+
+<span class="sd">    resultados_df : `pandas.core.frame.DataFrame`</span>
+<span class="sd">        dataframe con la información del mejor valor y posición encontrado en</span>
+<span class="sd">        cada iteración, así como la mejora respecto a la iteración anterior.</span>
+
+<span class="sd">    valor_optimo : `float`</span>
+<span class="sd">        mejor valor encontrado en todas las iteraciones.</span>
+
+<span class="sd">    posicion_optima : `numpy.narray`</span>
+<span class="sd">        posición donde se ha encontrado el valor_optimo.</span>
+
+<span class="sd">    optimizado : `bool`</span>
+<span class="sd">        si el enjambre ha sido optimizado.</span>
+
+<span class="sd">    iter_optimizacion : `int`</span>
+<span class="sd">        número de iteraciones de optimizacion.</span>
+
+<span class="sd">    verbose : `bool`, optional</span>
+<span class="sd">        mostrar información de la partícula creada. (default is ``False``)</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Ejemplo crear enjambre</span>
+
+<span class="sd">    &gt;&gt;&gt; enjambre = Enjambre(</span>
+<span class="sd">               n_particulas = 5,</span>
+<span class="sd">               n_variables  = 3,</span>
+<span class="sd">               limites_inf  = [-5,-5,-5],</span>
+<span class="sd">               limites_sup  = [5,5,5],</span>
+<span class="sd">               verbose      = True</span>
+<span class="sd">            )</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_particulas</span><span class="p">,</span> <span class="n">n_variables</span><span class="p">,</span> <span class="n">limites_inf</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">limites_sup</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+
+        <span class="c1"># Número de partículas del enjambre</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_particulas</span> <span class="o">=</span> <span class="n">n_particulas</span>
+        <span class="c1"># Número de variables de cada partícula</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span> <span class="o">=</span> <span class="n">n_variables</span>
+        <span class="c1"># Límite inferior de cada variable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span> <span class="o">=</span> <span class="n">limites_inf</span>
+        <span class="c1"># Límite superior de cada variable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span> <span class="o">=</span> <span class="n">limites_sup</span>
+        <span class="c1"># Verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="c1"># Lista de las partículas del enjambre</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">particulas</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Etiqueta para saber si el enjambre ha sido optimizado</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizado</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># Número de iteraciones de optimización llevadas a cabo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iter_optimizacion</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Mejor partícula del enjambre</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mejor_particula</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Mejor valor del enjambre</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Posición del mejor valor del enjambre.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Estado de todas las partículas del enjambre en cada iteración.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">historico_particulas</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Mejor posición en cada iteración.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_posicion</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Mejor valor en cada iteración.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_valor</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Diferencia absoluta entre el mejor valor de iteraciones consecutivas.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diferencia_abs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># data.frame con la información del mejor valor y posición encontrado en</span>
+        <span class="c1"># cada iteración, así como la mejora respecto a la iteración anterior.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resultados_df</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Mejor valor de todas las iteraciones</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valor_optimo</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Mejor posición de todas las iteraciones</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">posicion_optima</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># CONVERSIONES DE TIPO INICIALES</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="c1"># Si limites_inf o limites_sup no son un array numpy, se convierten en</span>
+        <span class="c1"># ello.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> \
+        <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> \
+        <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">)</span>
+
+        <span class="c1"># SE CREAN LAS PARTÍCULAS DEL ENJAMBRE Y SE ALMACENAN</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_particulas</span><span class="p">):</span>
+            <span class="n">particula_i</span> <span class="o">=</span> <span class="n">Particula</span><span class="p">(</span>
+                            <span class="n">n_variables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span><span class="p">,</span>
+                            <span class="n">limites_inf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">,</span>
+                            <span class="n">limites_sup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">,</span>
+                            <span class="n">verbose</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span>
+                          <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">particulas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">particula_i</span><span class="p">)</span>
+
+        <span class="c1"># INFORMACIÓN DEL PROCESO (VERBOSE)</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---------------&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Enjambre creado&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---------------&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Número de partículas: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_particulas</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Límites inferiores de cada variable: &quot;</span> \
+                  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array2string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Límites superiores de cada variable: &quot;</span> \
+                  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array2string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Información que se muestra cuando se imprime un objeto enjambre.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">texto</span> <span class="o">=</span> <span class="s2">&quot;============================&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;         Enjambre&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;============================&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Número de partículas: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_particulas</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Límites inferiores de cada variable: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Límites superiores de cada variable: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Optimizado: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizado</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Iteraciones optimización: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_optimizacion</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Información mejor partícula:&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;----------------------------&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Mejor posición actual: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Mejor valor actual: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Resultados tras optimizar:&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;----------------------------&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Posición óptima: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posicion_optima</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Valor óptimo: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valor_optimo</span><span class="p">)</span>
+                
+        <span class="k">return</span><span class="p">(</span><span class="n">texto</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Enjambre.mostrar_particulas"><a class="viewcode-back" href="../../../pso.codigo.html#pso.clases.class_enjambre.Enjambre.mostrar_particulas">[docs]</a>    <span class="k">def</span> <span class="nf">mostrar_particulas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Este método muestra la información de cada una de las n primeras </span>
+<span class="sd">        partículas del enjambre.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        n : `int`</span>
+<span class="sd">            número de particulas que se muestran. Si no se indica el valor</span>
+<span class="sd">            (por defecto ``None``), se muestran todas. Si el valor es mayor</span>
+<span class="sd">            que `self.n_particulas` se muestran todas.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; enjambre = Enjambre(</span>
+<span class="sd">               n_particulas = 5,</span>
+<span class="sd">               n_variables  = 3,</span>
+<span class="sd">               limites_inf  = [-5,-5,-5],</span>
+<span class="sd">               limites_sup  = [5,5,5],</span>
+<span class="sd">               verbose      = True</span>
+<span class="sd">            )</span>
+
+<span class="sd">        &gt;&gt;&gt; enjambre.mostrar_particulas(n = 1)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_particulas</span>
+        <span class="k">elif</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_particulas</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_particulas</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">particulas</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">return</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enjambre.evaluar_enjambre"><a class="viewcode-back" href="../../../pso.codigo.html#pso.clases.class_enjambre.Enjambre.evaluar_enjambre">[docs]</a>    <span class="k">def</span> <span class="nf">evaluar_enjambre</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">funcion_objetivo</span><span class="p">,</span> <span class="n">optimizacion</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Este método evalúa todas las partículas del enjambre, actualiza sus</span>
+<span class="sd">        valores e identifica la mejor partícula.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        funcion_objetivo : `function`</span>
+<span class="sd">            función que se quiere optimizar.</span>
+
+<span class="sd">        optimizacion : {maximizar o minimizar}</span>
+<span class="sd">            Dependiendo de esto, el mejor valor histórico de la partícula será</span>
+<span class="sd">            el mayor o el menor valorque ha tenido hasta el momento.</span>
+
+<span class="sd">        verbose : `bool`, optional</span>
+<span class="sd">            mostrar información de la partícula creada. (default is ``False``)</span>
+<span class="sd">        </span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        Ejemplo evaluar enjambre</span>
+
+<span class="sd">        &gt;&gt;&gt; enjambre = Enjambre(</span>
+<span class="sd">               n_particulas = 5,</span>
+<span class="sd">               n_variables  = 3,</span>
+<span class="sd">               limites_inf  = [-5,-5,-5],</span>
+<span class="sd">               limites_sup  = [5,5,5],</span>
+<span class="sd">               verbose      = True</span>
+<span class="sd">            )</span>
+
+<span class="sd">        &gt;&gt;&gt; def funcion_objetivo(x_0, x_1, x_2):</span>
+<span class="sd">                f= x_0**2 + x_1**2 + x_2**2</span>
+<span class="sd">                return(f)</span>
+
+<span class="sd">        &gt;&gt;&gt; enjambre.evaluar_enjambre(</span>
+<span class="sd">                funcion_objetivo = funcion_objetivo,</span>
+<span class="sd">                optimizacion     = &quot;minimizar&quot;,</span>
+<span class="sd">                verbose          = True</span>
+<span class="sd">                )</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># SE EVALÚA CADA PARTÍCULA DEL ENJAMBRE</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_particulas</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">particulas</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">evaluar_particula</span><span class="p">(</span>
+                <span class="n">funcion_objetivo</span> <span class="o">=</span> <span class="n">funcion_objetivo</span><span class="p">,</span>
+                <span class="n">optimizacion</span>     <span class="o">=</span> <span class="n">optimizacion</span><span class="p">,</span>
+                <span class="n">verbose</span>          <span class="o">=</span> <span class="n">verbose</span>
+                <span class="p">)</span>
+
+        <span class="c1"># MEJOR PARTÍCULA DEL ENJAMBRE</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="c1"># Se identifica la mejor partícula de todo el enjambre. Si se está</span>
+        <span class="c1"># maximizando, la mejor partícula es aquella con mayor valor.</span>
+        <span class="c1"># Lo contrario si se está minimizando.</span>
+
+        <span class="c1"># Se selecciona inicialmente como mejor partícula la primera.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mejor_particula</span> <span class="o">=</span>  <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">particulas</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># Se comparan todas las partículas del enjambre.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_particulas</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">optimizacion</span> <span class="o">==</span> <span class="s2">&quot;minimizar&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">particulas</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">valor</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">mejor_particula</span><span class="o">.</span><span class="n">valor</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">mejor_particula</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">particulas</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">particulas</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">valor</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">mejor_particula</span><span class="o">.</span><span class="n">valor</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">mejor_particula</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">particulas</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="c1"># Se extrae la posición y valor de la mejor partícula y se almacenan</span>
+        <span class="c1"># como mejor valor y posición del enjambre.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mejor_particula</span><span class="o">.</span><span class="n">valor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mejor_particula</span><span class="o">.</span><span class="n">posicion</span>
+
+        <span class="c1"># INFORMACIÓN DEL PROCESO (VERBOSE)</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Enjambre evaluado&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor posición encontrada : &quot;</span>
+                  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array2string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor valor encontrado : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enjambre.mover_enjambre"><a class="viewcode-back" href="../../../pso.codigo.html#pso.clases.class_enjambre.Enjambre.mover_enjambre">[docs]</a>    <span class="k">def</span> <span class="nf">mover_enjambre</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inercia</span><span class="p">,</span> <span class="n">peso_cognitivo</span><span class="p">,</span> <span class="n">peso_social</span><span class="p">,</span>
+                       <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Este método mueve todas las partículas del enjambre.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        optimizacion : {maximizar o minimizar}</span>
+<span class="sd">            si se desea maximizar o minimizar la función.</span>
+
+<span class="sd">        inercia : `float` or `int`</span>
+<span class="sd">            coeficiente de inercia.</span>
+
+<span class="sd">        peso_cognitivo : `float` or `int`</span>
+<span class="sd">            coeficiente cognitivo.</span>
+
+<span class="sd">        peso_social : `float` or `int`</span>
+<span class="sd">            coeficiente social.</span>
+
+<span class="sd">        verbose : `bool`, optional</span>
+<span class="sd">            mostrar información de la partícula creada. (default is ``False``)</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Se actualiza la posición de cada una de las partículas que forman el</span>
+        <span class="c1"># enjambre.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_particulas</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">particulas</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">mover_particula</span><span class="p">(</span>
+                <span class="n">mejor_p_enjambre</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span><span class="p">,</span>
+                <span class="n">inercia</span>          <span class="o">=</span> <span class="n">inercia</span><span class="p">,</span>
+                <span class="n">peso_cognitivo</span>   <span class="o">=</span> <span class="n">peso_cognitivo</span><span class="p">,</span>
+                <span class="n">peso_social</span>      <span class="o">=</span> <span class="n">peso_social</span><span class="p">,</span>
+                <span class="n">verbose</span>          <span class="o">=</span> <span class="n">verbose</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Información del proceso (VERBOSE)</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---------------------------------------------------------&quot;</span> \
+                  <span class="s2">&quot;------------&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;La posición de todas las partículas del enjambre ha sido &quot;</span> \
+                  <span class="s2">&quot;actualizada.&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---------------------------------------------------------&quot;</span> \
+            <span class="s2">&quot;------------&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Enjambre.optimizar"><a class="viewcode-back" href="../../../pso.codigo.html#pso.clases.class_enjambre.Enjambre.optimizar">[docs]</a>    <span class="k">def</span> <span class="nf">optimizar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">funcion_objetivo</span><span class="p">,</span> <span class="n">optimizacion</span><span class="p">,</span> <span class="n">n_iteraciones</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                  <span class="n">inercia</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">reduc_inercia</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">inercia_max</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span>
+                  <span class="n">inercia_min</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">peso_cognitivo</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">peso_social</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+                  <span class="n">parada_temprana</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">rondas_parada</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                  <span class="n">tolerancia_parada</span>  <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Este método realiza el proceso de optimización de un enjambre.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        funcion_objetivo : `function`</span>
+<span class="sd">            función que se quiere optimizar.</span>
+
+<span class="sd">        optimizacion : {maximizar o minimizar}</span>
+<span class="sd">            si se desea maximizar o minimizar la función.</span>
+
+<span class="sd">        m_iteraciones : `int` , optional</span>
+<span class="sd">            numero de iteraciones de optimización. (default is ``50``)</span>
+
+<span class="sd">        inercia : `float` or `int`, optional</span>
+<span class="sd">            coeficiente de inercia. (default is ``0.8``)</span>
+
+<span class="sd">        peso_cognitivo : `float` or `int`, optional</span>
+<span class="sd">            coeficiente cognitivo. (default is ``2``)</span>
+
+<span class="sd">        peso_social : `float` or `int`, optional</span>
+<span class="sd">            coeficiente social. (default is ``2``)</span>
+
+<span class="sd">        reduc_inercia: `bool`, optional</span>
+<span class="sd">           activar la reducción del coeficiente de inercia. En tal caso, el</span>
+<span class="sd">           argumento `inercia` es ignorado. (default is ``True``)</span>
+
+<span class="sd">        inercia_max : `float` or `int`, optional</span>
+<span class="sd">            valor inicial del coeficiente de inercia si se activa `reduc_inercia`.</span>
+<span class="sd">            (default is ``0.9``)</span>
+
+<span class="sd">        inercia_min : `float` or `int`, optional</span>
+<span class="sd">            valor minimo del coeficiente de inercia si se activa `reduc_min`.</span>
+<span class="sd">            (default is ``0.4``)</span>
+
+<span class="sd">        parada_temprana : `bool`, optional</span>
+<span class="sd">            si durante las últimas `rondas_parada` generaciones la diferencia</span>
+<span class="sd">            absoluta entre mejores individuos no es superior al valor de </span>
+<span class="sd">            `tolerancia_parada`, se detiene el algoritmo y no se crean nuevas</span>
+<span class="sd">            generaciones. (default is ``False``)</span>
+
+<span class="sd">        rondas_parada : `int`, optional</span>
+<span class="sd">            número de generaciones consecutivas sin mejora mínima para que se</span>
+<span class="sd">            active la parada temprana. (default is ``None``)</span>
+
+<span class="sd">        tolerancia_parada : `float` or `int`, optional</span>
+<span class="sd">            valor mínimo que debe tener la diferencia de generaciones consecutivas</span>
+<span class="sd">            para considerar que hay cambio. (default is ``None``)</span>
+
+<span class="sd">         verbose : `bool`, optional</span>
+<span class="sd">            mostrar información de la partícula creada. (default is ``False``)</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        raise Exception</span>
+<span class="sd">            si se indica `parada_temprana = True` y los argumentos `rondas_parada`</span>
+<span class="sd">            o `tolerancia_parada` son ``None``.</span>
+
+<span class="sd">        raise Exception</span>
+<span class="sd">            si se indica `reduc_inercia = True` y los argumentos `inercia_max`</span>
+<span class="sd">            o `inercia_min` son ``None``.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        Ejemplo optimización</span>
+
+<span class="sd">        &gt;&gt;&gt; def funcion_objetivo(x_0, x_1):</span>
+<span class="sd">                # Para la región acotada entre −10&lt;=x_0&lt;=0 y −6.5&lt;=x_1&lt;=0 la </span>
+<span class="sd">                # función tiene múltiples mínimos locales y un único minimo </span>
+<span class="sd">                # global en f(−3.1302468,−1.5821422)= −106.7645367.</span>
+<span class="sd">                f = np.sin(x_1)*np.exp(1-np.cos(x_0))**2 + np.cos(x_0)*np.exp(1-np.sin(x_1))**2 + (x_0-x_1)**2</span>
+<span class="sd">                return(f)</span>
+<span class="sd">                </span>
+<span class="sd">        &gt;&gt;&gt; enjambre = Enjambre(</span>
+<span class="sd">                        n_particulas = 50,</span>
+<span class="sd">                        n_variables  = 2,</span>
+<span class="sd">                        limites_inf  = [-10, -6.5],</span>
+<span class="sd">                        limites_sup  = [0, 0],</span>
+<span class="sd">                        verbose      = False</span>
+<span class="sd">                        )</span>
+<span class="sd">                        </span>
+<span class="sd">        &gt;&gt;&gt; enjambre.optimizar(</span>
+<span class="sd">                funcion_objetivo = funcion_objetivo,</span>
+<span class="sd">                optimizacion     = &quot;minimizar&quot;,</span>
+<span class="sd">                n_iteraciones    = 250,</span>
+<span class="sd">                inercia          = 0.8,</span>
+<span class="sd">                reduc_inercia    = True,</span>
+<span class="sd">                inercia_max      = 0.9,</span>
+<span class="sd">                inercia_min      = 0.4,</span>
+<span class="sd">                peso_cognitivo   = 1,</span>
+<span class="sd">                peso_social      = 2,</span>
+<span class="sd">                parada_temprana  = True,</span>
+<span class="sd">                rondas_parada    = 5,</span>
+<span class="sd">                tolerancia_parada = 10**-3,</span>
+<span class="sd">                verbose          = False</span>
+<span class="sd">            )</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># COMPROBACIONES INICIALES: EXCEPTIONS Y WARNINGS</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="c1"># Si se activa la parada temprana, hay que especificar los argumentos</span>
+        <span class="c1"># rondas_parada y tolerancia_parada.</span>
+        <span class="k">if</span> <span class="n">parada_temprana</span> \
+        <span class="ow">and</span> <span class="p">(</span><span class="n">rondas_parada</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">tolerancia_parada</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Para activar la parada temprana es necesario indicar un &quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot; valor de rondas_parada y de tolerancia_parada.&quot;</span>
+                <span class="p">)</span>
+        
+        <span class="c1"># Si se activa la reducción de inercia, hay que especificar los argumentos</span>
+        <span class="c1"># inercia_max y inercia_min.</span>
+        <span class="k">if</span> <span class="n">reduc_inercia</span> \
+        <span class="ow">and</span> <span class="p">(</span><span class="n">inercia_max</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">inercia_min</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="s2">&quot;Para activar la reducción de inercia es necesario indicar un &quot;</span> \
+            <span class="o">+</span> <span class="s2">&quot;valor de inercia_max y de inercia_min.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># ITERACIONES</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_iteraciones</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iteracion: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># EVALUAR PARTÍCULAS DEL ENJAMBRE</span>
+            <span class="c1"># ------------------------------------------------------------------</span>
+            <span class="n">enjambre</span><span class="o">.</span><span class="n">evaluar_enjambre</span><span class="p">(</span>
+                <span class="n">funcion_objetivo</span> <span class="o">=</span> <span class="n">funcion_objetivo</span><span class="p">,</span>
+                <span class="n">optimizacion</span>     <span class="o">=</span> <span class="s2">&quot;minimizar&quot;</span><span class="p">,</span>
+                <span class="n">verbose</span>          <span class="o">=</span> <span class="n">verbose</span>
+                <span class="p">)</span>
+
+            <span class="c1"># SE ALMACENA LA INFORMACIÓN DE LA ITERACIÓN EN LOS HISTÓRICOS</span>
+            <span class="c1"># ------------------------------------------------------------------</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">historico_particulas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">particulas</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_posicion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_valor</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span><span class="p">))</span>
+
+            <span class="c1"># SE CALCULA LA DIFERENCIA ABSOLUTA RESPECTO A LA ITERACION ANTERIOR</span>
+            <span class="c1"># ------------------------------------------------------------------</span>
+            <span class="c1"># La diferencia solo puede calcularse a partir de la segunda</span>
+            <span class="c1"># iteración.</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">diferencia_abs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">diferencia</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_valor</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> \
+                                 <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_valor</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">diferencia_abs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">diferencia</span><span class="p">)</span>
+
+            <span class="c1"># CRITERIO DE PARADA</span>
+            <span class="c1"># ------------------------------------------------------------------</span>
+            <span class="c1"># Si durante las últimas n generaciones, la diferencia absoluta entre</span>
+            <span class="c1"># mejores partículas no es superior al valor de tolerancia_parada,</span>
+            <span class="c1"># se detiene el algoritmo y no se crean nuevas generaciones.</span>
+            <span class="k">if</span> <span class="n">parada_temprana</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">rondas_parada</span><span class="p">:</span>
+                <span class="n">ultimos_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diferencia_abs</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">rondas_parada</span><span class="p">):</span> <span class="p">])</span>
+                <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">ultimos_n</span> <span class="o">&lt;</span> <span class="n">tolerancia_parada</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Algoritmo detenido en la iteracion &quot;</span> 
+                          <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> \
+                          <span class="o">+</span> <span class="s2">&quot; por falta cambio absoluto mínimo de &quot;</span> \
+                          <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">tolerancia_parada</span><span class="p">)</span> \
+                          <span class="o">+</span> <span class="s2">&quot; durante &quot;</span> \
+                          <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rondas_parada</span><span class="p">)</span> \
+                          <span class="o">+</span> <span class="s2">&quot; iteraciones consecutivas.&quot;</span><span class="p">)</span>
+                    <span class="k">break</span>
+            
+            <span class="c1"># MOVER PARTÍCULAS DEL ENJAMBRE</span>
+            <span class="c1"># ------------------------------------------------------------------</span>
+            <span class="c1"># Si se ha activado la reducción de inercia, se recalcula su valor </span>
+            <span class="c1"># para la iteración actual.</span>
+            <span class="k">if</span> <span class="n">reduc_inercia</span><span class="p">:</span>
+                <span class="n">inercia</span> <span class="o">=</span> <span class="p">((</span><span class="n">inercia_max</span> <span class="o">-</span> <span class="n">inercia_min</span><span class="p">)</span> \
+                          <span class="o">*</span> <span class="p">(</span><span class="n">n_iteraciones</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="n">n_iteraciones</span><span class="p">)</span> \
+                          <span class="o">+</span> <span class="n">inercia_min</span>
+           
+            <span class="n">enjambre</span><span class="o">.</span><span class="n">mover_enjambre</span><span class="p">(</span>
+               <span class="n">inercia</span>        <span class="o">=</span> <span class="n">inercia</span><span class="p">,</span>
+               <span class="n">peso_cognitivo</span> <span class="o">=</span> <span class="n">peso_cognitivo</span><span class="p">,</span>
+               <span class="n">peso_social</span>    <span class="o">=</span> <span class="n">peso_social</span><span class="p">,</span>
+               <span class="n">verbose</span>        <span class="o">=</span> <span class="kc">False</span>
+            <span class="p">)</span>
+
+        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizado</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iter_optimizacion</span> <span class="o">=</span> <span class="n">i</span>
+        
+        <span class="c1"># IDENTIFICACIÓN DEL MEJOR INDIVIDUO DE TODO EL PROCESO</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="n">indice_valor_optimo</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_valor</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valor_optimo</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_valor</span><span class="p">[</span><span class="n">indice_valor_optimo</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">posicion_optima</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_posicion</span><span class="p">[</span><span class="n">indice_valor_optimo</span><span class="p">]</span>
+        
+        <span class="c1"># CREACIÓN DE UN DATAFRAME CON LOS RESULTADOS</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resultados_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="p">{</span>
+            <span class="s2">&quot;mejor_valor_enjambre&quot;</span>   <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_valor</span><span class="p">,</span>
+            <span class="s2">&quot;mejor_posicion_enjambre&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_posicion</span><span class="p">,</span>
+            <span class="s2">&quot;diferencia_abs&quot;</span>         <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">diferencia_abs</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resultados_df</span><span class="p">[</span><span class="s2">&quot;iteracion&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resultados_df</span><span class="o">.</span><span class="n">index</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------------------------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optimización finalizada &quot;</span> \
+              <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------------------------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Duración optimización: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Número de iteraciones: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_optimizacion</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Joaquín Amat Rodrigo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

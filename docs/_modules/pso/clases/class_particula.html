@@ -1,0 +1,596 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pso.clases.class_particula &mdash; Optimización PSO 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Optimización PSO
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tabla de contenidos:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../pso.introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pso.codigo.html">Código Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pso.ejemplos.html">Ejemplos</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Optimización PSO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pso.clases.class_particula</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pso.clases.class_particula</h1><div class="highlight"><pre>
+<span></span><span class="c1">#%%</span>
+<span class="c1">################################################################################</span>
+<span class="c1">#                              CLASE PARTÍCULA                                 #</span>
+<span class="c1">################################################################################</span>
+
+<div class="viewcode-block" id="Particula"><a class="viewcode-back" href="../../../pso.codigo.html#pso.clases.class_particula.Particula">[docs]</a><span class="k">class</span> <span class="nc">Particula</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Esta clase representa una partícula con una posición inicial definida por</span>
+<span class="sd">    una combinación de valores numéricos aleatorios y velocidad de 0. El rango</span>
+<span class="sd">    de posibles valores para cada variable (posición) puede estar acotado. Al</span>
+<span class="sd">    crear una nueva partícula, solo se dispone de información sobre su posición </span>
+<span class="sd">    inicial y velocidad, el resto de atributos están vacíos.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_variables : `int`</span>
+<span class="sd">        número de variables que definen la posición de la partícula.</span>
+<span class="sd">        </span>
+<span class="sd">    limites_inf : `list` or `numpy.ndarray`, optional</span>
+<span class="sd">        límite inferior de cada variable. Si solo se quiere predefinir límites</span>
+<span class="sd">        de alguna variable, emplear ``None``. Los ``None`` serán remplazados</span>
+<span class="sd">        por el valor (-10**3). (default is ``None``)</span>
+<span class="sd">        </span>
+<span class="sd">    limites_sup : `list` or `numpy.ndarray`, optional</span>
+<span class="sd">        límite superior de cada variable. Si solo se quiere predefinir límites</span>
+<span class="sd">        de alguna variable, emplear ``None``. Los ``None`` serán remplazados</span>
+<span class="sd">        por el valor (+10**3). (default is ``None``)</span>
+
+<span class="sd">    verbose : `bool`, optional</span>
+<span class="sd">        mostrar información de la partícula creada. (default is ``False``)</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_variables : `int`</span>
+<span class="sd">        número de variables que definen la posición de la partícula.</span>
+
+<span class="sd">    limites_inf : `list` or `numpy.ndarray`</span>
+<span class="sd">        límite inferior de cada variable. Si solo se quiere predefinir límites</span>
+<span class="sd">        de alguna variable, emplear ``None``. Los ``None`` serán remplazados por</span>
+<span class="sd">        el valor (-10**3).</span>
+
+<span class="sd">    limites_sup : `list` or `numpy.ndarray`</span>
+<span class="sd">        límite superior de cada variable. Si solo se quiere predefinir límites</span>
+<span class="sd">        de alguna variable, emplear ``None``. Los``None`` serán remplazados por</span>
+<span class="sd">        el valor (+10**3).</span>
+
+<span class="sd">    mejor_valor : `numpy.ndarray`</span>
+<span class="sd">        mejor valor que ha tenido la partícula hasta el momento.</span>
+
+<span class="sd">    mejor_posicion : `numpy.ndarray`</span>
+<span class="sd">        posición en la que la partícula ha tenido el mejor valor hasta el momento.</span>
+
+<span class="sd">    valor : `float`</span>
+<span class="sd">        valor actual de la partícula. Resultado de evaluar la función objetivo</span>
+<span class="sd">        con la posición actual.</span>
+
+<span class="sd">    velocidad : `numpy.ndarray`</span>
+<span class="sd">        array con la velocidad actual de la partícula.</span>
+
+<span class="sd">    posicion : `numpy.ndarray`</span>
+<span class="sd">        posición actual de la partícula.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    raise Exception</span>
+<span class="sd">        si `limites_inf` es distinto de None y su longitud no coincide con</span>
+<span class="sd">        `n_variables`.</span>
+
+<span class="sd">    raise Exception</span>
+<span class="sd">        si `limites_sup` es distinto de None y su longitud no coincide con</span>
+<span class="sd">        `n_variables`.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Ejemplo creación partícula.</span>
+
+<span class="sd">    &gt;&gt;&gt; part = Particula(</span>
+<span class="sd">                    n_variables = 3,</span>
+<span class="sd">                    limites_inf = [4,10,20],</span>
+<span class="sd">                    limites_sup = [-1,2,0],</span>
+<span class="sd">                    verbose     = True</span>
+<span class="sd">                    )</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_variables</span><span class="p">,</span> <span class="n">limites_inf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">limites_sup</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+        <span class="c1"># Número de variables de la partícula</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span> <span class="o">=</span> <span class="n">n_variables</span>
+        <span class="c1"># Límite inferior de cada variable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span> <span class="o">=</span> <span class="n">limites_inf</span>
+        <span class="c1"># Límite superior de cada variable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span> <span class="o">=</span> <span class="n">limites_sup</span>
+        <span class="c1"># Posición de la partícula</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">posicion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_variables</span><span class="p">)</span>
+        <span class="c1"># Velocidad de la parícula</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_variables</span><span class="p">)</span>
+        <span class="c1"># Valor de la partícula</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Mejor valor que ha tenido la partícula hasta el momento</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Mejor posición en la que ha estado la partícula hasta el momento</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1"># CONVERSIONES DE TIPO INICIALES</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="c1"># Si limites_inf o limites_sup no son un array numpy, se convierten en</span>
+        <span class="c1"># ello.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> \
+        <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> \
+        <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">)</span>
+        
+        <span class="c1"># COMPROBACIONES INICIALES: EXCEPTIONS Y WARNINGS</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> \
+        <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;limites_inf debe tener un valor por cada variable. &quot;</span> <span class="o">+</span>
+                <span class="s2">&quot;Si para alguna variable no se quiere límite, emplear None. &quot;</span> <span class="o">+</span>
+                <span class="s2">&quot;Ejemplo: limites_inf = [10, None, 5]&quot;</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> \
+        <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;limites_sup debe tener un valor por cada variable. &quot;</span> <span class="o">+</span>
+                <span class="s2">&quot;Si para alguna variable no se quiere límite, emplear None. &quot;</span> <span class="o">+</span>
+                <span class="s2">&quot;Ejemplo: limites_sup = [10, None, 5]&quot;</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;Es altamente recomendable indicar los límites dentro de los &quot;</span> <span class="o">+</span> 
+                <span class="s2">&quot;cuales debe buscarse la solución de cada variable. &quot;</span> <span class="o">+</span> 
+                <span class="s2">&quot;Por defecto se emplea [-10^3, 10^3].&quot;</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">))</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;Los límites empleados por defecto cuando no se han definido &quot;</span> <span class="o">+</span>
+                <span class="s2">&quot;son: [-10^3, 10^3].&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># COMPROBACIONES INICIALES: ACCIONES</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+
+        <span class="c1"># Si no se especifica limites_inf, el valor mínimo que pueden tomar las </span>
+        <span class="c1"># variables es -10^3.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span><span class="p">)</span>
+
+        <span class="c1"># Si no se especifica limites_sup, el valor máximo que pueden tomar las </span>
+        <span class="c1"># variables es 10^3.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+             <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="o">+</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span><span class="p">)</span>
+            
+        <span class="c1"># Si los límites no son nulos, se reemplazan aquellas posiciones None por</span>
+        <span class="c1"># el valor por defecto -10^3 y 10^3.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span> <span class="o">==</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span>
+           
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span> <span class="o">==</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="o">+</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span>
+        
+        <span class="c1"># BUCLE PARA ASIGNAR UN VALOR A CADA UNA DE LAS VARIABLES QUE DEFINEN LA</span>
+        <span class="c1"># POSICIÓN</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span><span class="p">):</span>
+        <span class="c1"># Para cada posición, se genera un valor aleatorio dentro del rango</span>
+        <span class="c1"># permitido para esa variable.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                                <span class="p">)</span>
+
+        <span class="c1"># LA VELOCIDAD INICIAL DE LA PARTÍCULA ES 0</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span><span class="p">)</span>
+
+        <span class="c1"># INFORMACIÓN DEL PROCESO (VERBOSE)</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nueva partícula creada&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Posición: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Límites inferiores de cada variable: &quot;</span> \
+                  <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Límites superiores de cada variable: &quot;</span> \
+                  <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Velocidad: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Información que se muestra cuando se imprime un objeto partícula.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">texto</span> <span class="o">=</span> <span class="s2">&quot;Partícula&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;---------&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Posición: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Velocidad: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Mejor posicion: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Mejor valor: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Límites inferiores de cada variable: &quot;</span> \
+                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                <span class="o">+</span> <span class="s2">&quot;Límites superiores de cada variable: &quot;</span> \
+                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">)</span> \
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">texto</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Particula.evaluar_particula"><a class="viewcode-back" href="../../../pso.codigo.html#pso.clases.class_particula.Particula.evaluar_particula">[docs]</a>    <span class="k">def</span> <span class="nf">evaluar_particula</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">funcion_objetivo</span><span class="p">,</span> <span class="n">optimizacion</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Este método evalúa una partícula calculando el valor que toma la</span>
+<span class="sd">        función objetivo en la posición en la que se encuentra. Además, compara</span>
+<span class="sd">        si la nueva posición es mejor que las anteriores. Modifica los atributos</span>
+<span class="sd">        valor, mejor_valor y mejor_posicion de la partícula.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        funcion_objetivo : `function`</span>
+<span class="sd">            función que se quiere optimizar.</span>
+
+<span class="sd">        optimizacion : {&#39;maximizar&#39;, &#39;minimizar&#39;}</span>
+<span class="sd">            dependiendo de esto, el mejor valor histórico de la partícula será</span>
+<span class="sd">            el mayor o el menor valor que ha tenido hasta el momento.</span>
+
+<span class="sd">        verbose : `bool`, optional</span>
+<span class="sd">            mostrar información del proceso por pantalla. (default is ``False``)</span>
+<span class="sd">          </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        raise Exception</span>
+<span class="sd">            si el argumento `optimizacion` es distinto de &#39;maximizar&#39; o &#39;minimizar&#39;</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        Ejemplo evaluar partícula con una función objetivo.</span>
+
+<span class="sd">        &gt;&gt;&gt; part = Particula(</span>
+<span class="sd">                n_variables = 3,</span>
+<span class="sd">                limites_inf = [4,10,20],</span>
+<span class="sd">                limites_sup = [-1,2,None],</span>
+<span class="sd">                verbose     = True</span>
+<span class="sd">                )</span>
+
+<span class="sd">        &gt;&gt;&gt; def funcion_objetivo(x_0, x_1, x_2):</span>
+<span class="sd">                f= x_0**2 + x_1**2 + x_2**2</span>
+<span class="sd">                return(f)</span>
+
+<span class="sd">        &gt;&gt;&gt; part.evaluar_particula(</span>
+<span class="sd">                funcion_objetivo = funcion_objetivo,</span>
+<span class="sd">                optimizacion     = &quot;maximizar&quot;,</span>
+<span class="sd">                verbose          = True</span>
+<span class="sd">                )</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># COMPROBACIONES INICIALES: EXCEPTIONS Y WARNINGS</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">optimizacion</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;maximizar&quot;</span><span class="p">,</span> <span class="s2">&quot;minimizar&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;El argumento optimizacion debe ser: maximizar o minimizar&quot;</span>
+                <span class="p">)</span>
+
+        <span class="c1"># EVALUACIÓN DE LA FUNCIÓN OBJETIVO EN LA POSICIÓN ACTUAL</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valor</span> <span class="o">=</span> <span class="n">funcion_objetivo</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">)</span>
+
+        <span class="c1"># MEJOR VALOR Y POSICIÓN</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="c1"># Se compara el valor actual con el mejor valor histórico. La comparación</span>
+        <span class="c1"># es distinta dependiendo de si se desea maximizar o minimizar.</span>
+        <span class="c1"># Si no existe ningún valor histórico, se almacena el actual. Si ya existe</span>
+        <span class="c1"># algún valor histórico se compara con el actual y, de ser mejor este</span>
+        <span class="c1"># último, se sobrescribe.</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valor</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">optimizacion</span> <span class="o">==</span> <span class="s2">&quot;minimizar&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">valor</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valor</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">valor</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valor</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">)</span>
+
+        <span class="c1"># INFORMACIÓN DEL PROCESO (VERBOSE)</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;La partícula ha sido evaluada&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------------&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valor actual: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valor</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Particula.mover_particula"><a class="viewcode-back" href="../../../pso.codigo.html#pso.clases.class_particula.Particula.mover_particula">[docs]</a>    <span class="k">def</span> <span class="nf">mover_particula</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mejor_p_enjambre</span><span class="p">,</span> <span class="n">inercia</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">peso_cognitivo</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                        <span class="n">peso_social</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Este método ejecuta el movimiento de una partícula, lo que implica</span>
+<span class="sd">        actualizar su velocidad y posición. No se permite que la partícula</span>
+<span class="sd">        salga de la zona de búsqueda acotada por los límites.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mejor_p_enjambre : `np.narray`</span>
+<span class="sd">            mejor posición de todo el enjambre.</span>
+
+<span class="sd">        inercia : `float`, optional</span>
+<span class="sd">            coeficiente de inercia. (default is 0.8)</span>
+
+<span class="sd">        peso_cognitivo : `float`, optional</span>
+<span class="sd">            coeficiente cognitivo. (default is 2)</span>
+
+<span class="sd">        peso_social : `float`, optional</span>
+<span class="sd">            coeficiente social. (default is 2)</span>
+
+<span class="sd">        verbose : `bool`, optional</span>
+<span class="sd">            mostrar información de la partícula creada. (default is ``False``)</span>
+<span class="sd">          </span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        Ejemplo mover partícula.</span>
+
+<span class="sd">        &gt;&gt;&gt; part = Particula(</span>
+<span class="sd">                n_variables = 3,</span>
+<span class="sd">                limites_inf = [4,10,20],</span>
+<span class="sd">                limites_sup = [-1,2,None],</span>
+<span class="sd">                verbose     = True</span>
+<span class="sd">                )</span>
+
+<span class="sd">        &gt;&gt;&gt; def funcion_objetivo(x_0, x_1, x_2):</span>
+<span class="sd">                f= x_0**2 + x_1**2 + x_2**2</span>
+<span class="sd">                return(f)</span>
+
+<span class="sd">        &gt;&gt;&gt; part.evaluar_particula(</span>
+<span class="sd">                funcion_objetivo = funcion_objetivo,</span>
+<span class="sd">                optimizacion     = &quot;maximizar&quot;,</span>
+<span class="sd">                verbose          = True</span>
+<span class="sd">                )</span>
+
+<span class="sd">        &gt;&gt;&gt; part.mover_particula(</span>
+<span class="sd">                mejor_p_enjambre = np.array([-1000,-1000,+1000]),</span>
+<span class="sd">                inercia          = 0.8,</span>
+<span class="sd">                peso_cognitivo   = 2,</span>
+<span class="sd">                peso_social      = 2,</span>
+<span class="sd">                verbose          = True</span>
+<span class="sd">                )</span>
+<span class="sd">       </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># ACTUALIZACIÓN DE LA VELOCIDAD</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="n">componente_velocidad</span> <span class="o">=</span> <span class="n">inercia</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
+        <span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span><span class="p">))</span>
+        <span class="n">r2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span><span class="p">))</span>
+        <span class="n">componente_cognitivo</span> <span class="o">=</span> <span class="n">peso_cognitivo</span> <span class="o">*</span> <span class="n">r1</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span> \
+                                                      <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">)</span>
+        <span class="n">componente_social</span> <span class="o">=</span> <span class="n">peso_social</span> <span class="o">*</span> <span class="n">r2</span> <span class="o">*</span> <span class="p">(</span><span class="n">mejor_p_enjambre</span> \
+                                                <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">)</span>
+        <span class="n">nueva_velocidad</span> <span class="o">=</span> <span class="n">componente_velocidad</span> <span class="o">+</span> <span class="n">componente_cognitivo</span> \
+                          <span class="o">+</span> <span class="n">componente_social</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">nueva_velocidad</span><span class="p">)</span>
+        
+        <span class="c1"># ACTUALIZACIÓN DE LA POSICIÓN</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">posicion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">posicion</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span>
+
+        <span class="c1"># COMPROBAR LÍMITES</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="c1"># Se comprueba si algún valor de la nueva posición supera los límites</span>
+        <span class="c1"># impuestos. En tal caso, se sobrescribe con el valor del límite</span>
+        <span class="c1"># correspondiente y se reinicia a 0 la velocidad de la partícula en esa</span>
+        <span class="c1"># componente.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">velocidad</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                
+        <span class="c1"># INFORMACIÓN DEL PROCESO (VERBOSE)</span>
+        <span class="c1"># ----------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;La partícula se ha desplazado&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------------&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nueva posición: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posicion</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Joaquín Amat Rodrigo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
