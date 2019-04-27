@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introducción &mdash; Optimización PSO 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Código Python" href="pso.codigo.html" />
+    <link rel="prev" title="OPTIMIZACIÓN PSO CON PYTHON" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Optimización PSO
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tabla de contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introducción</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#algoritmo">Algoritmo</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#crear-particula">Crear partícula</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#evaluar-particula">Evaluar partícula</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mover-particula">Mover partícula</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pso.codigo.html">Código Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pso.ejemplos.html">Ejemplos</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Optimización PSO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Introducción</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/pso.introduccion.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduccion">
+<h1>Introducción<a class="headerlink" href="#introduccion" title="Permalink to this headline">¶</a></h1>
+<p>La optimización por enjambre de partículas (<em>Particle Swarm Optimization, PSO</em>) es un método de optimización heurística orientado a encontrar mínimos o máximos globales. Su funcionamiento está inspirado en el comportamiento que tienen las bandadas de pájaros o bancos de peces en los que, el movimiento de cada individuo (dirección, velocidad, aceleración…), es el resultado de combinar las decisiones individuales de cada uno con el comportamiento del resto.</p>
+<blockquote>
+<div><p>El método de enjambre de partículas es solo una de las muchas estrategias de optimización heurística que existen, una alternativa común son los <a class="reference external" href="https://rpubs.com/Joaquin_AR/465473/">algoritmos genéticos</a>.</p>
+<p>La optimización heurística no tiene por qué ser la forma de optimización más adecuada en todos los escenarios. Si el problema en cuestión puede optimizarse de forma analítica, suele ser más adecuado resolverlo de esta forma.</p>
+<p>La implementación de algoritmo que se muestra en este documento pretende ser lo más explicativa posible aunque para ello no sea la más eficiente.</p>
+</div></blockquote>
+<p>El código de las funciones desarrolladas a lo largo del documento puede descargarse en el siguiente <a class="reference external" href="https://github.com/JoaquinAmatRodrigo/optimizacion_PSO_python/blob/master/PSO_python.py/">Link</a>.</p>
+<div class="section" id="algoritmo">
+<h2>Algoritmo<a class="headerlink" href="#algoritmo" title="Permalink to this headline">¶</a></h2>
+<p>Aunque existen variaciones, algunas de las cuales se describen a lo largo de este documento, en términos generales, la estructura de un algoritmo <em>PSO</em> para optimizar (maximizar o minimizar) una función con una o múltiples variables sigue los siguientes pasos:</p>
+<hr class="docutils" />
+<ol class="arabic simple">
+<li>Crear un enjambre inicial de <span class="math notranslate nohighlight">\(n\)</span> partículas aleatorias. Cada partícula consta de 4 elementos: una posición que representa una determinada combinación de valores de las variables, el valor de la función objetivo en la posición donde se encuentra la partícula, una velocidad que indica cómo y hacia donde se desplaza la partícula, y un registro de la mejor posición en la que ha estado la partícula hasta el momento.</li>
+<li>Evaluar cada partícula con la función objetivo.</li>
+<li>Actualizar la posición y velocidad de cada partícula. Esta es la parte que proporciona al algoritmo la capacidad de optimización. En el apartado <strong>Mover partícula</strong> se describe con detalle el proceso.</li>
+<li>Si no se cumple un criterio de parada, volver al paso 2.</li>
+</ol>
+<hr class="docutils" />
+<p>En los siguientes apartados se implementan cada una de las etapas del proceso para, finalmente, combinarlas todas en una única función.</p>
+<div class="section" id="crear-particula">
+<h3>Crear partícula<a class="headerlink" href="#crear-particula" title="Permalink to this headline">¶</a></h3>
+<p>Cada partícula está definida por una posición, velocidad y valor que varían a medida que la partícula se mueve. Además, también almacena la mejor posición en la que ha estado hasta el momento. Cuando se crea aun nueva partícula, únicamente se dispone de información sobre su posición y velocidad (normalmente iniciada como cero), el resto de valores no se conocen hasta que la partícula es evaluada.</p>
+</div>
+<div class="section" id="evaluar-particula">
+<h3>Evaluar partícula<a class="headerlink" href="#evaluar-particula" title="Permalink to this headline">¶</a></h3>
+<p>Evaluar una partícula consiste en calcular el valor de la función objetivo en la posición que ocupa la partícula es ese momento. Cada partícula almacena también la posición con mejor valor en la que ha estado hasta el momento. Para poder identificar
+si una nueva posición es mejor que las anteriores, es necesario conocer si se trata de un problema de minimización o maximización.</p>
+</div>
+<div class="section" id="mover-particula">
+<h3>Mover partícula<a class="headerlink" href="#mover-particula" title="Permalink to this headline">¶</a></h3>
+<p>Mover una partícula implica actualizar su velocidad y posición. Este paso es el más importante ya que otorga al algoritmo la capacidad de optimizar.</p>
+<p>La velocidad de cada partícula del enjambre se actualiza empleando la siguiente ecuación:</p>
+<div class="math notranslate nohighlight">
+\[v_i(t+1) = wv_i(t) + c_1r_1[\hat{x}_i(t) - x_i(t)] + c_2r_2[g(t) - x_i(t)]\]</div>
+<p>donde:</p>
+<ul class="simple">
+<li><span class="math notranslate nohighlight">\(v_i(t+1)\)</span>: velocidad de la partícula <span class="math notranslate nohighlight">\(i\)</span> en el momento <span class="math notranslate nohighlight">\(t + 1\)</span>, es decir, la nueva velocidad.</li>
+<li><span class="math notranslate nohighlight">\(v_i(t)\)</span>: velocidad de la partícula <span class="math notranslate nohighlight">\(i\)</span> en el momento <span class="math notranslate nohighlight">\(t\)</span>, es decir, la velocidad actual.</li>
+<li><span class="math notranslate nohighlight">\(w\)</span>: coeficiente de inercia, reduce o aumenta a la velocidad de la partícula.</li>
+<li><span class="math notranslate nohighlight">\(c_1\)</span>: coeficiente cognitivo.</li>
+<li><span class="math notranslate nohighlight">\(r_1\)</span>: vector de valores aleatorios entre 0 y 1 de longitud igual a la del vector velocidad.</li>
+<li><span class="math notranslate nohighlight">\(\hat{x}_i(t)\)</span>: mejor posición en la que ha estado la partícula <span class="math notranslate nohighlight">\(i\)</span> hasta el momento.</li>
+<li><span class="math notranslate nohighlight">\(x_i(t)\)</span>: posición de la partícula <span class="math notranslate nohighlight">\(i\)</span> en el momento <span class="math notranslate nohighlight">\(t\)</span>.</li>
+<li><span class="math notranslate nohighlight">\(c_2\)</span>: coeficiente social.</li>
+<li><span class="math notranslate nohighlight">\(r_2\)</span>: vector de valores aleatorios entre 0 y 1 de longitud igual a la del vector velocidad.</li>
+<li><span class="math notranslate nohighlight">\(g(t)\)</span>: posición de todo el enjambre en el momento <span class="math notranslate nohighlight">\(t\)</span>, el mejor valor global.</li>
+</ul>
+<p>Para comprender como se relaciona esta ecuación con el movimiento de la partícula, resulta útil diferenciar tres partes:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><span class="math notranslate nohighlight">\(wv_i(t)\)</span></dt>
+<dd>Es la componente de inercia, responsable de mantener a la partícula moviéndose en la dirección en la que lo ha estado haciendo hasta el momento. El valor recomendado del coeficiente de inercia <span class="math notranslate nohighlight">\(w\)</span> suele ser entre 0.8 y 1.2. Si <span class="math notranslate nohighlight">\(w&lt;1\)</span>, la partícula se va desacelerando a medida que avanzan las iteraciones, esto se traduce en menor exploración pero una convergencia hacia el óptimo más rápida. Si <span class="math notranslate nohighlight">\(w&gt;1\)</span>, la partícula se va acelerando, lo que permite explorar más zonas del espacio de la función pero dificulta la convergencia.</dd>
+<dt><span class="math notranslate nohighlight">\(c_1r_1[\hat{x}_i(t) - x_i(t)]\)</span></dt>
+<dd>Es la componente cognitiva, responsable de que la partícula tienda a moverse hacia la posición donde ha obtenido mejores resultados hasta el momento. El coeficiente cognitivo <span class="math notranslate nohighlight">\(c_1\)</span> suele estar acotado en el rango [0, 2], siendo 2 el valor recomendado. <span class="math notranslate nohighlight">\(r_1\)</span> es un vector de valores aleatorios entre 0 y 1 (un valor por cada dimensión) que aporta cierto comportamiento estocástico al movimiento de las partículas, mejorando así la capacidad de escapar de mínimos locales.</dd>
+<dt><span class="math notranslate nohighlight">\(c_2r_2[g(t) - x_i(t)]\)</span></dt>
+<dd>Es la componente social, responsable de que la partícula tienda a moverse hacia la mejor posición encontrada por el enjambre hasta el momento. Puede interpretarse como el “conocimiento colectivo”. El valor del coeficiente social <span class="math notranslate nohighlight">\(c_2\)</span> suele estar acotado en el rango [0, 2], siendo 2 el valor recomendado. <span class="math notranslate nohighlight">\(r_2\)</span> es un vector de valores aleatorios entre 0 y 1 (un valor por cada dimensión) que aporta cierto comportamiento estocástico al movimiento de las partículas, mejorando así la capacidad de escapar de mínimos locales.</dd>
+</dl>
+<p>La magnitud relativa entre la componente cognitiva y la componente social permite regular el comportamiento exploratorio del algoritmo. Cuanto mayor es el valor de <span class="math notranslate nohighlight">\(c_1\)</span> respecto a <span class="math notranslate nohighlight">\(c_2\)</span>, mayor independencia de movimiento tiene cada partícula, lo que permite mayor exploración pero mayor lentitud en la convergencia. Por el contrario, cuanto mayor es el valor de <span class="math notranslate nohighlight">\(c_2\)</span> respecto a <span class="math notranslate nohighlight">\(c_1\)</span>, más obligadas están las partículas a moverse hacia la mejor región encontrada hasta el momento, lo que reduce la exploración pero acelera la convergencia.</p>
+<p>En algunas versiones del algoritmo, <span class="math notranslate nohighlight">\(r_1\)</span> y <span class="math notranslate nohighlight">\(r_2\)</span> son escalares en lugar de vectores. Multiplicar cada componente de la velocidad por un valor aleatorio distinto añade mayores fluctuaciones al movimiento de las partículas, lo que, aun a riesgo de retrasar la convergencia, suele generar mejores resultados.</p>
+</div></blockquote>
+<p>Una vez calculada la nueva velocidad, se puede actualizar la posición de la partícula con la ecuación:</p>
+<div class="math notranslate nohighlight">
+\[x_i(t+1) = x_i(t) + v_i(t+1)\]</div>
+<p>Uno de los principales problemas del algoritmo <em>PSO</em> es que las partículas suelen adquirir velocidades excesivamente altas, lo que les lleva a salirse de los límites del espacio de búsqueda o a que sean incapaces de converger en la región óptima. Es en este paso del algoritmo donde más investigaciones y adaptaciones se han hecho. Algunas de las soluciones son:</p>
+<ul class="simple">
+<li>Limitar la velocidad máxima que puede alcanzar una partícula. Siendo [<span class="math notranslate nohighlight">\(x_{min}\)</span>, <span class="math notranslate nohighlight">\(x_{max}\)</span>] los límites inferior y superior del espacio de búsqueda de cada variable, la velocidad máxima que puede alcanzar la partícula en esa dirección es <span class="math notranslate nohighlight">\(v_{max} = k(x_{max} - x_{min})/2\)</span>, donde <span class="math notranslate nohighlight">\(k\)</span> suele ser un valor entre 0.1 y 1.</li>
+<li>Si el valor de alguna de las variables excede los límites impuestos, se sobrescribe con el valor del límite correspondiente y se reinicia su velocidad a cero.</li>
+<li>Reducción lineal del coeficiente de inercia <span class="math notranslate nohighlight">\(w\)</span>. Esta estrategia consiste en ir reduciendo el coeficiente de inercia a medida que avanzan las iteraciones. En las primeras iteraciones, las partículas tiene mucha capacidad de exploración y, a medida que avanza el proceso, va reduciéndose su velocidad favoreciendo la convergencia. Puede conseguirse este efecto con la ecuación:</li>
+</ul>
+<div class="math notranslate nohighlight">
+\[w_t = (w_{max} - w_{min}) \frac{t_{max} -t}{t_{max}} + w_{min}\]</div>
+<p>donde:</p>
+<ul class="simple">
+<li><span class="math notranslate nohighlight">\(w_{t}\)</span>: coeficiente de inercia en la iteración <span class="math notranslate nohighlight">\(t\)</span>.</li>
+<li><span class="math notranslate nohighlight">\(w_{max}\)</span>: coeficiente de inercia máximo. Valor con el que se inicia el algoritmo. Valor recomendado de 0.9.</li>
+<li><span class="math notranslate nohighlight">\(w_{min}\)</span>: coeficiente de inercia mínimo. Valor que se alcanza en la última iteración. Valor recomendado de 0.4.</li>
+<li><span class="math notranslate nohighlight">\(t_{max}\)</span>: número máximo de iteraciones.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pso.codigo.html" class="btn btn-neutral float-right" title="Código Python" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="OPTIMIZACIÓN PSO CON PYTHON" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Joaquín Amat Rodrigo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

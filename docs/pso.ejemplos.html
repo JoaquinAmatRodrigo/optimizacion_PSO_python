@@ -1,0 +1,305 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Ejemplos &mdash; Optimización PSO 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Optimización PSO
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tabla de contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pso.introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pso.codigo.html">Código Python</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Ejemplos</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Optimización PSO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Ejemplos</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/pso.ejemplos.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ejemplos">
+<h1>Ejemplos<a class="headerlink" href="#ejemplos" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="c1"># Función objetivo que se quiere minimizar</span>
+<span class="k">def</span> <span class="nf">funcion_objetivo</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Para la región acotada entre −10&lt;=x_0&lt;=0 y −6.5&lt;=x_1&lt;=0 la función tiene</span>
+<span class="sd">    múltiples mínimos locales y un único minimo global que se encuentra en</span>
+<span class="sd">    f(−3.1302468,−1.5821422) = −106.7645367</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_1</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x_0</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> \
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x_0</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> \
+        <span class="o">+</span> <span class="p">(</span><span class="n">x_0</span><span class="o">-</span><span class="n">x_1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Contour plot función objetivo</span>
+<span class="n">x_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">x_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="o">-</span><span class="mf">6.5</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">funcion_objetivo</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdGy&#39;</span><span class="p">)</span>
+
+<span class="n">enjambre</span> <span class="o">=</span> <span class="n">Enjambre</span><span class="p">(</span>
+               <span class="n">n_particulas</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+               <span class="n">n_variables</span>  <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+               <span class="n">limites_inf</span>  <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.5</span><span class="p">],</span>
+               <span class="n">limites_sup</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+               <span class="n">verbose</span>      <span class="o">=</span> <span class="bp">False</span>
+            <span class="p">)</span>
+
+<span class="n">enjambre</span><span class="o">.</span><span class="n">optimizar</span><span class="p">(</span>
+    <span class="n">funcion_objetivo</span> <span class="o">=</span> <span class="n">funcion_objetivo</span><span class="p">,</span>
+    <span class="n">optimizacion</span>     <span class="o">=</span> <span class="s2">&quot;minimizar&quot;</span><span class="p">,</span>
+    <span class="n">n_iteraciones</span>    <span class="o">=</span> <span class="mi">250</span><span class="p">,</span>
+    <span class="n">inercia</span>          <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">reduc_inercia</span>    <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="n">inercia_max</span>      <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span>
+    <span class="n">inercia_min</span>      <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span>
+    <span class="n">peso_cognitivo</span>   <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">peso_social</span>      <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">parada_temprana</span>  <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="n">rondas_parada</span>    <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">tolerancia_parada</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">verbose</span>          <span class="o">=</span> <span class="bp">False</span>
+<span class="p">)</span>
+
+<span class="n">enjambre</span>
+
+<span class="c1"># Evolución de la optimización</span>
+<span class="n">enjambre</span><span class="o">.</span><span class="n">resultados_df</span><span class="p">[</span><span class="s1">&#39;mejor_valor_enjambre&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c1"># Representación evolución partículas gráfico animado</span>
+<span class="kn">import</span> <span class="nn">matplotlib.animation</span> <span class="kn">as</span> <span class="nn">animation</span>
+<span class="kn">import</span> <span class="nn">plotly_express</span> <span class="kn">as</span> <span class="nn">px</span>
+
+<span class="k">def</span> <span class="nf">extraer_posicion</span><span class="p">(</span><span class="n">particula</span><span class="p">):</span>
+    <span class="n">posicion</span> <span class="o">=</span> <span class="n">particula</span><span class="o">.</span><span class="n">posicion</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">posicion</span><span class="p">)</span>
+
+<span class="n">lista_df_temp</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">enjambre</span><span class="o">.</span><span class="n">historico_particulas</span><span class="p">)):</span>
+    <span class="n">posiciones</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">extraer_posicion</span><span class="p">,</span> <span class="n">enjambre</span><span class="o">.</span><span class="n">historico_particulas</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    <span class="n">df_temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;iteracion&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span> <span class="s2">&quot;posicion&quot;</span><span class="p">:</span> <span class="n">posiciones</span><span class="p">})</span>
+    <span class="n">lista_df_temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_temp</span><span class="p">)</span>
+
+<span class="n">df_posiciones</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">lista_df_temp</span><span class="p">)</span>
+
+<span class="n">df_posiciones</span><span class="p">[[</span><span class="s1">&#39;x_0&#39;</span><span class="p">,</span><span class="s1">&#39;x_1&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df_posiciones</span><span class="p">[</span><span class="s2">&quot;posicion&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+                                            <span class="n">index</span><span class="o">=</span> <span class="n">df_posiciones</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+<span class="n">df_posiciones</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+<span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">df_posiciones</span><span class="p">,</span>
+    <span class="n">x</span>       <span class="o">=</span> <span class="s2">&quot;x_0&quot;</span><span class="p">,</span>
+    <span class="n">y</span>       <span class="o">=</span> <span class="s2">&quot;x_1&quot;</span><span class="p">,</span>
+    <span class="n">range_x</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">range_y</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">6.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">animation_frame</span> <span class="o">=</span> <span class="s2">&quot;iteracion&quot;</span>
+<span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">6.5</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">animate</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">6.5</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">df_posiciones_i</span> <span class="o">=</span> <span class="n">df_posiciones</span><span class="p">[</span><span class="n">df_posiciones</span><span class="p">[</span><span class="s2">&quot;iteracion&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">][[</span><span class="s2">&quot;x_0&quot;</span><span class="p">,</span> <span class="s2">&quot;x_1&quot;</span><span class="p">]]</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdGy&#39;</span><span class="p">)</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_posiciones_i</span><span class="p">[</span><span class="s2">&quot;x_0&quot;</span><span class="p">],</span> <span class="n">df_posiciones_i</span><span class="p">[</span><span class="s2">&quot;x_1&quot;</span><span class="p">])</span>
+
+<span class="n">ani</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">animate</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blit</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Joaquín Amat Rodrigo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,485 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Particula &mdash; Optimización PSO 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Optimización PSO
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tabla de contenidos:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pso.introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pso.codigo.html">Código Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pso.ejemplos.html">Ejemplos</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Optimización PSO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Particula</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/pso.clases.particula.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pso.clases.class_particula">
+<span id="particula"></span><h1>Particula<a class="headerlink" href="#module-pso.clases.class_particula" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pso.clases.class_particula.Particula">
+<em class="property">class </em><code class="descclassname">pso.clases.class_particula.</code><code class="descname">Particula</code><span class="sig-paren">(</span><em>n_variables</em>, <em>limites_inf=None</em>, <em>limites_sup=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pso/clases/class_particula.html#Particula"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pso.clases.class_particula.Particula" title="Permalink to this definition">¶</a></dt>
+<dd><p>Esta clase representa una partícula con una posición inicial definida por
+una combinación de valores numéricos aleatorios y velocidad de 0. El rango
+de posibles valores para cada variable (posición) puede estar acotado. Al
+crear una nueva partícula, solo se dispone de información sobre su posición
+inicial y velocidad, el resto de atributos están vacíos.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n_variables</strong> (<cite>int</cite>) – número de variables que definen la posición de la partícula.</li>
+<li><strong>limites_inf</strong> (<cite>list</cite> or <cite>numpy.ndarray</cite>, optional) – límite inferior de cada variable. Si solo se quiere predefinir límites
+de alguna variable, emplear <code class="docutils literal notranslate"><span class="pre">None</span></code>. Los <code class="docutils literal notranslate"><span class="pre">None</span></code> serán remplazados
+por el valor (-10**3). (default is <code class="docutils literal notranslate"><span class="pre">None</span></code>)</li>
+<li><strong>limites_sup</strong> (<cite>list</cite> or <cite>numpy.ndarray</cite>, optional) – límite superior de cada variable. Si solo se quiere predefinir límites
+de alguna variable, emplear <code class="docutils literal notranslate"><span class="pre">None</span></code>. Los <code class="docutils literal notranslate"><span class="pre">None</span></code> serán remplazados
+por el valor (+10**3). (default is <code class="docutils literal notranslate"><span class="pre">None</span></code>)</li>
+<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información de la partícula creada. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pso.clases.class_particula.Particula.n_variables">
+<code class="descname">n_variables</code><a class="headerlink" href="#pso.clases.class_particula.Particula.n_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>número de variables que definen la posición de la partícula.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>int</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_particula.Particula.limites_inf">
+<code class="descname">limites_inf</code><a class="headerlink" href="#pso.clases.class_particula.Particula.limites_inf" title="Permalink to this definition">¶</a></dt>
+<dd><p>límite inferior de cada variable. Si solo se quiere predefinir límites
+de alguna variable, emplear <code class="docutils literal notranslate"><span class="pre">None</span></code>. Los <code class="docutils literal notranslate"><span class="pre">None</span></code> serán remplazados por
+el valor (-10**3).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>list</cite> or <cite>numpy.ndarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_particula.Particula.limites_sup">
+<code class="descname">limites_sup</code><a class="headerlink" href="#pso.clases.class_particula.Particula.limites_sup" title="Permalink to this definition">¶</a></dt>
+<dd><p>límite superior de cada variable. Si solo se quiere predefinir límites
+de alguna variable, emplear <code class="docutils literal notranslate"><span class="pre">None</span></code>. Los``None`` serán remplazados por
+el valor (+10**3).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>list</cite> or <cite>numpy.ndarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_particula.Particula.mejor_valor">
+<code class="descname">mejor_valor</code><a class="headerlink" href="#pso.clases.class_particula.Particula.mejor_valor" title="Permalink to this definition">¶</a></dt>
+<dd><p>mejor valor que ha tenido la partícula hasta el momento.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>numpy.ndarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_particula.Particula.mejor_posicion">
+<code class="descname">mejor_posicion</code><a class="headerlink" href="#pso.clases.class_particula.Particula.mejor_posicion" title="Permalink to this definition">¶</a></dt>
+<dd><p>posición en la que la partícula ha tenido el mejor valor hasta el momento.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>numpy.ndarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_particula.Particula.valor">
+<code class="descname">valor</code><a class="headerlink" href="#pso.clases.class_particula.Particula.valor" title="Permalink to this definition">¶</a></dt>
+<dd><p>valor actual de la partícula. Resultado de evaluar la función objetivo
+con la posición actual.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>float</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_particula.Particula.velocidad">
+<code class="descname">velocidad</code><a class="headerlink" href="#pso.clases.class_particula.Particula.velocidad" title="Permalink to this definition">¶</a></dt>
+<dd><p>array con la velocidad actual de la partícula.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>numpy.ndarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_particula.Particula.posicion">
+<code class="descname">posicion</code><a class="headerlink" href="#pso.clases.class_particula.Particula.posicion" title="Permalink to this definition">¶</a></dt>
+<dd><p>posición actual de la partícula.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>numpy.ndarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><em>raise Exception</em> – si <cite>limites_inf</cite> es distinto de None y su longitud no coincide con
+<cite>n_variables</cite>.</li>
+<li><em>raise Exception</em> – si <cite>limites_sup</cite> es distinto de None y su longitud no coincide con
+<cite>n_variables</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Ejemplo creación partícula.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">part</span> <span class="o">=</span> <span class="n">Particula</span><span class="p">(</span>
+<span class="go">                n_variables = 3,</span>
+<span class="go">                limites_inf = [4,10,20],</span>
+<span class="go">                limites_sup = [-1,2,0],</span>
+<span class="go">                verbose     = True</span>
+<span class="go">                )</span>
+</pre></div>
+</div>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="pso.codigo.html#pso.clases.class_particula.Particula.evaluar_particula" title="pso.clases.class_particula.Particula.evaluar_particula"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluar_particula</span></code></a>(funcion_objetivo,&nbsp;optimizacion)</td>
+<td>Este método evalúa una partícula calculando el valor que toma la función objetivo en la posición en la que se encuentra.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pso.codigo.html#pso.clases.class_particula.Particula.mover_particula" title="pso.clases.class_particula.Particula.mover_particula"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mover_particula</span></code></a>(mejor_p_enjambre[,&nbsp;inercia,&nbsp;…])</td>
+<td>Este método ejecuta el movimiento de una partícula, lo que implica actualizar su velocidad y posición.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pso.clases.class_particula.Particula.evaluar_particula">
+<code class="descname">evaluar_particula</code><span class="sig-paren">(</span><em>funcion_objetivo</em>, <em>optimizacion</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pso/clases/class_particula.html#Particula.evaluar_particula"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pso.clases.class_particula.Particula.evaluar_particula" title="Permalink to this definition">¶</a></dt>
+<dd><p>Este método evalúa una partícula calculando el valor que toma la
+función objetivo en la posición en la que se encuentra. Además, compara
+si la nueva posición es mejor que las anteriores. Modifica los atributos
+valor, mejor_valor y mejor_posicion de la partícula.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>funcion_objetivo</strong> (<cite>function</cite>) – función que se quiere optimizar.</li>
+<li><strong>optimizacion</strong> (<em>{'maximizar'</em><em>, </em><em>'minimizar'}</em>) – dependiendo de esto, el mejor valor histórico de la partícula será
+el mayor o el menor valor que ha tenido hasta el momento.</li>
+<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información del proceso por pantalla. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><em>raise Exception</em> – si el argumento <cite>optimizacion</cite> es distinto de ‘maximizar’ o ‘minimizar’</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Ejemplo evaluar partícula con una función objetivo.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">part</span> <span class="o">=</span> <span class="n">Particula</span><span class="p">(</span>
+<span class="go">        n_variables = 3,</span>
+<span class="go">        limites_inf = [4,10,20],</span>
+<span class="go">        limites_sup = [-1,2,None],</span>
+<span class="go">        verbose     = True</span>
+<span class="go">        )</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">funcion_objetivo</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">):</span>
+<span class="go">        f= x_0**2 + x_1**2 + x_2**2</span>
+<span class="go">        return(f)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">part</span><span class="o">.</span><span class="n">evaluar_particula</span><span class="p">(</span>
+<span class="go">        funcion_objetivo = funcion_objetivo,</span>
+<span class="go">        optimizacion     = &quot;maximizar&quot;,</span>
+<span class="go">        verbose          = True</span>
+<span class="go">        )</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pso.clases.class_particula.Particula.mover_particula">
+<code class="descname">mover_particula</code><span class="sig-paren">(</span><em>mejor_p_enjambre</em>, <em>inercia=0.8</em>, <em>peso_cognitivo=2</em>, <em>peso_social=2</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pso/clases/class_particula.html#Particula.mover_particula"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pso.clases.class_particula.Particula.mover_particula" title="Permalink to this definition">¶</a></dt>
+<dd><p>Este método ejecuta el movimiento de una partícula, lo que implica
+actualizar su velocidad y posición. No se permite que la partícula
+salga de la zona de búsqueda acotada por los límites.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>mejor_p_enjambre</strong> (<cite>np.narray</cite>) – mejor posición de todo el enjambre.</li>
+<li><strong>inercia</strong> (<cite>float</cite>, optional) – coeficiente de inercia. (default is 0.8)</li>
+<li><strong>peso_cognitivo</strong> (<cite>float</cite>, optional) – coeficiente cognitivo. (default is 2)</li>
+<li><strong>peso_social</strong> (<cite>float</cite>, optional) – coeficiente social. (default is 2)</li>
+<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información de la partícula creada. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Ejemplo mover partícula.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">part</span> <span class="o">=</span> <span class="n">Particula</span><span class="p">(</span>
+<span class="go">        n_variables = 3,</span>
+<span class="go">        limites_inf = [4,10,20],</span>
+<span class="go">        limites_sup = [-1,2,None],</span>
+<span class="go">        verbose     = True</span>
+<span class="go">        )</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">funcion_objetivo</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">):</span>
+<span class="go">        f= x_0**2 + x_1**2 + x_2**2</span>
+<span class="go">        return(f)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">part</span><span class="o">.</span><span class="n">evaluar_particula</span><span class="p">(</span>
+<span class="go">        funcion_objetivo = funcion_objetivo,</span>
+<span class="go">        optimizacion     = &quot;maximizar&quot;,</span>
+<span class="go">        verbose          = True</span>
+<span class="go">        )</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">part</span><span class="o">.</span><span class="n">mover_particula</span><span class="p">(</span>
+<span class="go">        mejor_p_enjambre = np.array([-1000,-1000,+1000]),</span>
+<span class="go">        inercia          = 0.8,</span>
+<span class="go">        peso_cognitivo   = 2,</span>
+<span class="go">        peso_social      = 2,</span>
+<span class="go">        verbose          = True</span>
+<span class="go">        )</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Joaquín Amat Rodrigo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

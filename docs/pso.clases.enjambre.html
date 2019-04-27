@@ -1,0 +1,679 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Enjambre &mdash; Optimización PSO 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Optimización PSO
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tabla de contenidos:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pso.introduccion.html">Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pso.codigo.html">Código Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pso.ejemplos.html">Ejemplos</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Optimización PSO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Enjambre</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/pso.clases.enjambre.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pso.clases.class_enjambre">
+<span id="enjambre"></span><h1>Enjambre<a class="headerlink" href="#module-pso.clases.class_enjambre" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pso.clases.class_enjambre.Enjambre">
+<em class="property">class </em><code class="descclassname">pso.clases.class_enjambre.</code><code class="descname">Enjambre</code><span class="sig-paren">(</span><em>n_particulas</em>, <em>n_variables</em>, <em>limites_inf=None</em>, <em>limites_sup=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pso/clases/class_enjambre.html#Enjambre"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre" title="Permalink to this definition">¶</a></dt>
+<dd><p>Esta clase crea un enjambre de n partículas. El rango de posibles valores
+para cada variable (posición) puede estar acotado.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n_particulas</strong> (<cite>int</cite>) – número de partículas del enjambre.</li>
+<li><strong>n_variables</strong> (<cite>int</cite>) – número de variables que definen la posición de las partícula.</li>
+<li><strong>limites_inf</strong> (<cite>list</cite> or <cite>numpy.ndarray</cite>) – límite inferior de cada variable. Si solo se quiere predefinir límites
+de alguna variable, emplear <code class="docutils literal notranslate"><span class="pre">None</span></code>. Los <code class="docutils literal notranslate"><span class="pre">None</span></code> serán remplazados por
+el valor (-10**3).</li>
+<li><strong>limites_sup</strong> (<cite>list</cite> or <cite>numpy.ndarray</cite>) – límite superior de cada variable. Si solo se quiere predefinir límites
+de alguna variable, emplear <code class="docutils literal notranslate"><span class="pre">None</span></code>. Los``None`` serán remplazados por
+el valor (+10**3).</li>
+<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información de la partícula creada. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.partículas">
+<code class="descname">partículas</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.partículas" title="Permalink to this definition">¶</a></dt>
+<dd><p>lista con todas las partículas del enjambre.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>list</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.n_particulas">
+<code class="descname">n_particulas</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.n_particulas" title="Permalink to this definition">¶</a></dt>
+<dd><p>número de partículas del enjambre.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>int</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.n_variables">
+<code class="descname">n_variables</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.n_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>número de variables que definen la posición de las partícula.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>int</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.limites_inf">
+<code class="descname">limites_inf</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.limites_inf" title="Permalink to this definition">¶</a></dt>
+<dd><p>límite inferior de cada variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>list</cite> or <cite>numpy.ndarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.limites_sup">
+<code class="descname">limites_sup</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.limites_sup" title="Permalink to this definition">¶</a></dt>
+<dd><p>límite superior de cada variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>list</cite> or <cite>numpy.ndarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.mejor_particula">
+<code class="descname">mejor_particula</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.mejor_particula" title="Permalink to this definition">¶</a></dt>
+<dd><p>la mejor partícula del enjambre en estado actual.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>object particula</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.mejor_valor">
+<code class="descname">mejor_valor</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.mejor_valor" title="Permalink to this definition">¶</a></dt>
+<dd><p>el mejor valor del enjambre en su estado actual.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>floar</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.historico_particulas">
+<code class="descname">historico_particulas</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.historico_particulas" title="Permalink to this definition">¶</a></dt>
+<dd><p>lista con el estado de las partículas en cada una de las iteraciones que
+ha tenido el enjambre.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>list</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.historico_mejor_posicion">
+<code class="descname">historico_mejor_posicion</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.historico_mejor_posicion" title="Permalink to this definition">¶</a></dt>
+<dd><p>lista con la mejor posición en cada una de las iteraciones que ha tenido
+el enjambre.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>list</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.historico_mejor_valor">
+<code class="descname">historico_mejor_valor</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.historico_mejor_valor" title="Permalink to this definition">¶</a></dt>
+<dd><p>lista con el mejor valor en cada una de las iteraciones que ha tenido el
+enjambre.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>list</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.diferencia_abs">
+<code class="descname">diferencia_abs</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.diferencia_abs" title="Permalink to this definition">¶</a></dt>
+<dd><p>diferencia absoluta entre el mejor valor de iteraciones consecutivas.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>list</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.resultados_df">
+<code class="descname">resultados_df</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.resultados_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>dataframe con la información del mejor valor y posición encontrado en
+cada iteración, así como la mejora respecto a la iteración anterior.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>pandas.core.frame.DataFrame</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.valor_optimo">
+<code class="descname">valor_optimo</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.valor_optimo" title="Permalink to this definition">¶</a></dt>
+<dd><p>mejor valor encontrado en todas las iteraciones.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>float</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.posicion_optima">
+<code class="descname">posicion_optima</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.posicion_optima" title="Permalink to this definition">¶</a></dt>
+<dd><p>posición donde se ha encontrado el valor_optimo.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>numpy.narray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.optimizado">
+<code class="descname">optimizado</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.optimizado" title="Permalink to this definition">¶</a></dt>
+<dd><p>si el enjambre ha sido optimizado.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>bool</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.iter_optimizacion">
+<code class="descname">iter_optimizacion</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.iter_optimizacion" title="Permalink to this definition">¶</a></dt>
+<dd><p>número de iteraciones de optimizacion.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>int</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pso.clases.class_enjambre.Enjambre.verbose">
+<code class="descname">verbose</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>mostrar información de la partícula creada. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>bool</cite>, optional</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<p>Ejemplo crear enjambre</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enjambre</span> <span class="o">=</span> <span class="n">Enjambre</span><span class="p">(</span>
+<span class="go">           n_particulas = 5,</span>
+<span class="go">           n_variables  = 3,</span>
+<span class="go">           limites_inf  = [-5,-5,-5],</span>
+<span class="go">           limites_sup  = [5,5,5],</span>
+<span class="go">           verbose      = True</span>
+<span class="go">        )</span>
+</pre></div>
+</div>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="pso.codigo.html#pso.clases.class_enjambre.Enjambre.evaluar_enjambre" title="pso.clases.class_enjambre.Enjambre.evaluar_enjambre"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluar_enjambre</span></code></a>(funcion_objetivo,&nbsp;optimizacion)</td>
+<td>Este método evalúa todas las partículas del enjambre, actualiza sus valores e identifica la mejor partícula.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pso.codigo.html#pso.clases.class_enjambre.Enjambre.mostrar_particulas" title="pso.clases.class_enjambre.Enjambre.mostrar_particulas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mostrar_particulas</span></code></a>([n])</td>
+<td>Este método muestra la información de cada una de las n primeras partículas del enjambre.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pso.codigo.html#pso.clases.class_enjambre.Enjambre.mover_enjambre" title="pso.clases.class_enjambre.Enjambre.mover_enjambre"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mover_enjambre</span></code></a>(inercia,&nbsp;peso_cognitivo,&nbsp;…)</td>
+<td>Este método mueve todas las partículas del enjambre.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pso.codigo.html#pso.clases.class_enjambre.Enjambre.optimizar" title="pso.clases.class_enjambre.Enjambre.optimizar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimizar</span></code></a>(funcion_objetivo,&nbsp;optimizacion[,&nbsp;…])</td>
+<td>Este método realiza el proceso de optimización de un enjambre.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pso.clases.class_enjambre.Enjambre.evaluar_enjambre">
+<code class="descname">evaluar_enjambre</code><span class="sig-paren">(</span><em>funcion_objetivo</em>, <em>optimizacion</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pso/clases/class_enjambre.html#Enjambre.evaluar_enjambre"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.evaluar_enjambre" title="Permalink to this definition">¶</a></dt>
+<dd><p>Este método evalúa todas las partículas del enjambre, actualiza sus
+valores e identifica la mejor partícula.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>funcion_objetivo</strong> (<cite>function</cite>) – función que se quiere optimizar.</li>
+<li><strong>optimizacion</strong> (<em>{maximizar o minimizar}</em>) – Dependiendo de esto, el mejor valor histórico de la partícula será
+el mayor o el menor valorque ha tenido hasta el momento.</li>
+<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información de la partícula creada. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Ejemplo evaluar enjambre</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enjambre</span> <span class="o">=</span> <span class="n">Enjambre</span><span class="p">(</span>
+<span class="go">       n_particulas = 5,</span>
+<span class="go">       n_variables  = 3,</span>
+<span class="go">       limites_inf  = [-5,-5,-5],</span>
+<span class="go">       limites_sup  = [5,5,5],</span>
+<span class="go">       verbose      = True</span>
+<span class="go">    )</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">funcion_objetivo</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">):</span>
+<span class="go">        f= x_0**2 + x_1**2 + x_2**2</span>
+<span class="go">        return(f)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enjambre</span><span class="o">.</span><span class="n">evaluar_enjambre</span><span class="p">(</span>
+<span class="go">        funcion_objetivo = funcion_objetivo,</span>
+<span class="go">        optimizacion     = &quot;minimizar&quot;,</span>
+<span class="go">        verbose          = True</span>
+<span class="go">        )</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pso.clases.class_enjambre.Enjambre.mostrar_particulas">
+<code class="descname">mostrar_particulas</code><span class="sig-paren">(</span><em>n=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pso/clases/class_enjambre.html#Enjambre.mostrar_particulas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.mostrar_particulas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Este método muestra la información de cada una de las n primeras
+partículas del enjambre.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<cite>int</cite>) – número de particulas que se muestran. Si no se indica el valor
+(por defecto <code class="docutils literal notranslate"><span class="pre">None</span></code>), se muestran todas. Si el valor es mayor
+que <cite>self.n_particulas</cite> se muestran todas.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enjambre</span> <span class="o">=</span> <span class="n">Enjambre</span><span class="p">(</span>
+<span class="go">       n_particulas = 5,</span>
+<span class="go">       n_variables  = 3,</span>
+<span class="go">       limites_inf  = [-5,-5,-5],</span>
+<span class="go">       limites_sup  = [5,5,5],</span>
+<span class="go">       verbose      = True</span>
+<span class="go">    )</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enjambre</span><span class="o">.</span><span class="n">mostrar_particulas</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pso.clases.class_enjambre.Enjambre.mover_enjambre">
+<code class="descname">mover_enjambre</code><span class="sig-paren">(</span><em>inercia</em>, <em>peso_cognitivo</em>, <em>peso_social</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pso/clases/class_enjambre.html#Enjambre.mover_enjambre"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.mover_enjambre" title="Permalink to this definition">¶</a></dt>
+<dd><p>Este método mueve todas las partículas del enjambre.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>optimizacion</strong> (<em>{maximizar o minimizar}</em>) – si se desea maximizar o minimizar la función.</li>
+<li><strong>inercia</strong> (<cite>float</cite> or <cite>int</cite>) – coeficiente de inercia.</li>
+<li><strong>peso_cognitivo</strong> (<cite>float</cite> or <cite>int</cite>) – coeficiente cognitivo.</li>
+<li><strong>peso_social</strong> (<cite>float</cite> or <cite>int</cite>) – coeficiente social.</li>
+<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información de la partícula creada. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pso.clases.class_enjambre.Enjambre.optimizar">
+<code class="descname">optimizar</code><span class="sig-paren">(</span><em>funcion_objetivo</em>, <em>optimizacion</em>, <em>n_iteraciones=50</em>, <em>inercia=0.8</em>, <em>reduc_inercia=True</em>, <em>inercia_max=0.9</em>, <em>inercia_min=0.4</em>, <em>peso_cognitivo=2</em>, <em>peso_social=2</em>, <em>parada_temprana=False</em>, <em>rondas_parada=None</em>, <em>tolerancia_parada=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pso/clases/class_enjambre.html#Enjambre.optimizar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.optimizar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Este método realiza el proceso de optimización de un enjambre.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>funcion_objetivo</strong> (<cite>function</cite>) – función que se quiere optimizar.</li>
+<li><strong>optimizacion</strong> (<em>{maximizar o minimizar}</em>) – si se desea maximizar o minimizar la función.</li>
+<li><strong>m_iteraciones</strong> (<cite>int</cite> , optional) – numero de iteraciones de optimización. (default is <code class="docutils literal notranslate"><span class="pre">50</span></code>)</li>
+<li><strong>inercia</strong> (<cite>float</cite> or <cite>int</cite>, optional) – coeficiente de inercia. (default is <code class="docutils literal notranslate"><span class="pre">0.8</span></code>)</li>
+<li><strong>peso_cognitivo</strong> (<cite>float</cite> or <cite>int</cite>, optional) – coeficiente cognitivo. (default is <code class="docutils literal notranslate"><span class="pre">2</span></code>)</li>
+<li><strong>peso_social</strong> (<cite>float</cite> or <cite>int</cite>, optional) – coeficiente social. (default is <code class="docutils literal notranslate"><span class="pre">2</span></code>)</li>
+<li><strong>reduc_inercia</strong> (<cite>bool</cite>, optional) – activar la reducción del coeficiente de inercia. En tal caso, el
+argumento <cite>inercia</cite> es ignorado. (default is <code class="docutils literal notranslate"><span class="pre">True</span></code>)</li>
+<li><strong>inercia_max</strong> (<cite>float</cite> or <cite>int</cite>, optional) – valor inicial del coeficiente de inercia si se activa <cite>reduc_inercia</cite>.
+(default is <code class="docutils literal notranslate"><span class="pre">0.9</span></code>)</li>
+<li><strong>inercia_min</strong> (<cite>float</cite> or <cite>int</cite>, optional) – valor minimo del coeficiente de inercia si se activa <cite>reduc_min</cite>.
+(default is <code class="docutils literal notranslate"><span class="pre">0.4</span></code>)</li>
+<li><strong>parada_temprana</strong> (<cite>bool</cite>, optional) – si durante las últimas <cite>rondas_parada</cite> generaciones la diferencia
+absoluta entre mejores individuos no es superior al valor de
+<cite>tolerancia_parada</cite>, se detiene el algoritmo y no se crean nuevas
+generaciones. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
+<li><strong>rondas_parada</strong> (<cite>int</cite>, optional) – número de generaciones consecutivas sin mejora mínima para que se
+active la parada temprana. (default is <code class="docutils literal notranslate"><span class="pre">None</span></code>)</li>
+<li><strong>tolerancia_parada</strong> (<cite>float</cite> or <cite>int</cite>, optional) – <dl class="docutils">
+<dt>valor mínimo que debe tener la diferencia de generaciones consecutivas</dt>
+<dd>para considerar que hay cambio. (default is <code class="docutils literal notranslate"><span class="pre">None</span></code>)</dd>
+<dt>verbose <span class="classifier-delimiter">:</span> <span class="classifier"><cite>bool</cite>, optional</span></dt>
+<dd>mostrar información de la partícula creada. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</dd>
+</dl>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><em>raise Exception</em> – si se indica <cite>parada_temprana = True</cite> y los argumentos <cite>rondas_parada</cite>
+o <cite>tolerancia_parada</cite> son <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
+<li><em>raise Exception</em> – si se indica <cite>reduc_inercia = True</cite> y los argumentos <cite>inercia_max</cite>
+o <cite>inercia_min</cite> son <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Ejemplo optimización</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">funcion_objetivo</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">):</span>
+<span class="go">        # Para la región acotada entre −10&lt;=x_0&lt;=0 y −6.5&lt;=x_1&lt;=0 la</span>
+<span class="go">        # función tiene múltiples mínimos locales y un único minimo</span>
+<span class="go">        # global en f(−3.1302468,−1.5821422)= −106.7645367.</span>
+<span class="go">        f = np.sin(x_1)*np.exp(1-np.cos(x_0))**2 + np.cos(x_0)*np.exp(1-np.sin(x_1))**2 + (x_0-x_1)**2</span>
+<span class="go">        return(f)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enjambre</span> <span class="o">=</span> <span class="n">Enjambre</span><span class="p">(</span>
+<span class="go">                n_particulas = 50,</span>
+<span class="go">                n_variables  = 2,</span>
+<span class="go">                limites_inf  = [-10, -6.5],</span>
+<span class="go">                limites_sup  = [0, 0],</span>
+<span class="go">                verbose      = False</span>
+<span class="go">                )</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enjambre</span><span class="o">.</span><span class="n">optimizar</span><span class="p">(</span>
+<span class="go">        funcion_objetivo = funcion_objetivo,</span>
+<span class="go">        optimizacion     = &quot;minimizar&quot;,</span>
+<span class="go">        n_iteraciones    = 250,</span>
+<span class="go">        inercia          = 0.8,</span>
+<span class="go">        reduc_inercia    = True,</span>
+<span class="go">        inercia_max      = 0.9,</span>
+<span class="go">        inercia_min      = 0.4,</span>
+<span class="go">        peso_cognitivo   = 1,</span>
+<span class="go">        peso_social      = 2,</span>
+<span class="go">        parada_temprana  = True,</span>
+<span class="go">        rondas_parada    = 5,</span>
+<span class="go">        tolerancia_parada = 10**-3,</span>
+<span class="go">        verbose          = False</span>
+<span class="go">    )</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Joaquín Amat Rodrigo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
