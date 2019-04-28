@@ -151,14 +151,12 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pso.clases.class_particula</h1><div class="highlight"><pre>
-<span></span><span class="c1">#%%</span>
-<span class="c1">################################################################################</span>
+<span></span><span class="c1">################################################################################</span>
 <span class="c1">#                              CLASE PARTÍCULA                                 #</span>
 <span class="c1">################################################################################</span>
 
 <div class="viewcode-block" id="Particula"><a class="viewcode-back" href="../../../pso.codigo.html#pso.clases.class_particula.Particula">[docs]</a><span class="k">class</span> <span class="nc">Particula</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Esta clase representa una partícula con una posición inicial definida por</span>
+    <span class="sd">&quot;&quot;&quot;Esta clase representa nueva partícula con una posición inicial definida por</span>
 <span class="sd">    una combinación de valores numéricos aleatorios y velocidad de 0. El rango</span>
 <span class="sd">    de posibles valores para cada variable (posición) puede estar acotado. Al</span>
 <span class="sd">    crear una nueva partícula, solo se dispone de información sobre su posición </span>
@@ -210,9 +208,6 @@
 <span class="sd">    velocidad : `numpy.ndarray`</span>
 <span class="sd">        array con la velocidad actual de la partícula.</span>
 
-<span class="sd">    posicion : `numpy.ndarray`</span>
-<span class="sd">        posición actual de la partícula.</span>
-
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
 <span class="sd">    raise Exception</span>
@@ -229,8 +224,8 @@
 
 <span class="sd">    &gt;&gt;&gt; part = Particula(</span>
 <span class="sd">                    n_variables = 3,</span>
-<span class="sd">                    limites_inf = [4,10,20],</span>
-<span class="sd">                    limites_sup = [-1,2,0],</span>
+<span class="sd">                    limites_inf = [-1,2,0],</span>
+<span class="sd">                    limites_sup = [4,10,20],</span>
 <span class="sd">                    verbose     = True</span>
 <span class="sd">                    )</span>
 
@@ -401,8 +396,8 @@
 
 <span class="sd">        &gt;&gt;&gt; part = Particula(</span>
 <span class="sd">                n_variables = 3,</span>
-<span class="sd">                limites_inf = [4,10,20],</span>
-<span class="sd">                limites_sup = [-1,2,None],</span>
+<span class="sd">                limites_inf = [-1,2,None],</span>
+<span class="sd">                limites_sup = [4,10,20],</span>
 <span class="sd">                verbose     = True</span>
 <span class="sd">                )</span>
 
@@ -488,8 +483,8 @@
 
 <span class="sd">        &gt;&gt;&gt; part = Particula(</span>
 <span class="sd">                n_variables = 3,</span>
-<span class="sd">                limites_inf = [4,10,20],</span>
-<span class="sd">                limites_sup = [-1,2,None],</span>
+<span class="sd">                limites_inf = [-1,2,None],</span>
+<span class="sd">                limites_sup = [4,10,20],</span>
 <span class="sd">                verbose     = True</span>
 <span class="sd">                )</span>
 
