@@ -98,8 +98,8 @@ class Particula:
 
     >>> part = Particula(
                     n_variables = 3,
-                    limites_inf = [4,10,20],
-                    limites_sup = [-1,2,0],
+                    limites_inf = [-1,2,0],
+                    limites_sup = [4,10,20],
                     verbose     = True
                     )
 
@@ -270,8 +270,8 @@ class Particula:
 
         >>> part = Particula(
                 n_variables = 3,
-                limites_inf = [4,10,20],
-                limites_sup = [-1,2,None],
+                limites_inf = [-1,2,0],
+                limites_sup = [4,10,20],
                 verbose     = True
                 )
 
@@ -357,8 +357,8 @@ class Particula:
 
         >>> part = Particula(
                 n_variables = 3,
-                limites_inf = [4,10,20],
-                limites_sup = [-1,2,None],
+                limites_inf = [-1,2,0],
+                limites_sup = [4,10,20],
                 verbose     = True
                 )
 
@@ -882,7 +882,7 @@ class Enjambre:
 
         >>> def funcion_objetivo(x_0, x_1):
                 # Para la región acotada entre −10<=x_0<=0 y −6.5<=x_1<=0 la 
-                # función tiene múltiples mínimos locales y un único minimo 
+                # función tiene múltiples mínimos locales y un único mínimo 
                 # global en f(−3.1302468,−1.5821422)= −106.7645367.
                 f = np.sin(x_1)*np.exp(1-np.cos(x_0))**2 \
                     + np.cos(x_0)*np.exp(1-np.sin(x_1))**2 \
@@ -959,7 +959,7 @@ class Enjambre:
             self.historico_mejor_posicion.append(copy.deepcopy(self.mejor_posicion))
             self.historico_mejor_valor.append(copy.deepcopy(self.mejor_valor))
 
-            # SE CALCULA LA DIFERENCIA ABSOLUTA RESPECTO A LA ITERACION ANTERIOR
+            # SE CALCULA LA DIFERENCIA ABSOLUTA RESPECTO A LA ITERACIÓN ANTERIOR
             # ------------------------------------------------------------------
             # La diferencia solo puede calcularse a partir de la segunda
             # iteración.
