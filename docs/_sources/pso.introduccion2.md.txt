@@ -1,0 +1,132 @@
+# Introducción
+
+
+La optimización por enjambre de partículas (*Particle Swarm Optimization, PSO*) es un método de optimización heurística orientado a encontrar mínimos o máximos globales. Su funcionamiento está inspirado en el comportamiento que tienen las bandadas de pájaros o bancos de peces en los que, el movimiento de cada individuo (dirección, velocidad, aceleración...), es el resultado de combinar las decisiones individuales de cada uno con el comportamiento del resto.
+
+>*El método de enjambre de partículas es solo una de las muchas estrategias de optimización heurística que existen, una alternativa común son los [algoritmos genéticos](https://rpubs.com/Joaquin_AR/465473).*
+
+>*La optimización heurística no tiene por qué ser la forma de optimización más adecuada en todos los escenarios. Si el problema en cuestión puede optimizarse de forma analítica, suele ser más adecuado resolverlo de esta forma.*
+
+>*La implementación de algoritmo que se muestra en este documento pretende ser lo más explicativa posible aunque para ello no sea la más eficiente.*
+
+El código de las funciones desarrolladas a lo largo del documento puede descargarse en el siguiente [link](https://github.com/JoaquinAmatRodrigo/optimizacion_PSO_python/blob/master/PSO_python.py)
+
+
+## Algoritmo
+
+Aunque existen variaciones, algunas de las cuales se describen a lo largo de este documento, en términos generales, la estructura de un algoritmo *PSO* para optimizar (maximizar o minimizar) una función con una o múltiples variables sigue los siguientes pasos:
+
+----
+
+1. Crear un enjambre inicial de $n$ partículas aleatorias. Cada partícula consta de 4 elementos: una posición que representa una determinada combinación de valores de las variables, el valor de la función objetivo en la posición donde se encuentra la partícula, una velocidad que indica cómo y hacia donde se desplaza la partícula, y un registro de la mejor posición en la que ha estado la partícula hasta el momento.
+<br><br>
+
+2. Evaluar cada partícula con la función objetivo.
+<br><br>
+
+3. Actualizar la posición y velocidad de cada partícula. Esta es la parte que proporciona al algoritmo la capacidad de optimización. En el apartado [Mover partícula](#Mover partícula) se describe con detalle el proceso.
+<br><br>
+
+4. Si no se cumple un criterio de parada, volver al paso 2.
+
+----
+
+En los siguientes apartados se implementan cada una de las etapas del proceso para, finalmente, combinarlas todas en una única función.
+<br><br>
+
+### Crear partícula
+
+Cada partícula está definida por una posición, velocidad y valor que varían a medida que la partícula se mueve. Además, también almacena la mejor posición en la que ha estado hasta el momento. Cuando se crea aun nueva partícula, únicamente se dispone de información sobre su posición y velocidad (normalmente iniciada como cero), el resto de valores no se conocen hasta que la partícula es evaluada.
+<br><br>
+
+### Evaluar partícula
+
+Evaluar una partícula consiste en calcular el valor de la función objetivo en la posición que ocupa la partícula es ese momento. Cada partícula almacena también la posición con mejor valor en la que ha estado hasta el momento. Para poder identificar
+si una nueva posición es mejor que las anteriores, es necesario conocer si se trata de un problema de minimización o maximización.
+<br><br>
+
+### Mover partícula
+
+Mover una partícula implica actualizar su velocidad y posición. Este paso es el más importante ya que otorga al algoritmo la capacidad de optimizar.
+
+La velocidad de cada partícula del enjambre se actualiza empleando la siguiente ecuación:
+
+```math
+
+v_i(t+1) = wv_i(t) + c_1r_1[\hat{x}_i(t) - x_i(t)] + c_2r_2[g(t) - x_i(t)]
+
+```
+
+`$ v_i(t+1) = wv_i(t) + c_1r_1[\hat{x}_i(t) - x_i(t)] + c_2r_2[g(t) - x_i(t)] $`
+
+donde:
+
++ `$ v_i(t+1) $`: velocidad de la partícula $i$ en el momento $t + 1$, es decir, la nueva velocidad.
++ `$ v_i(t) $`: velocidad de la partícula $i$ en el momento $t$, es decir, la velocidad actual.
++ `$w$`: coeficiente de inercia, reduce o aumenta a la velocidad de la partícula.
++ `$c_1$`: coeficiente cognitivo.
++ `$r_1$`: vector de valores aleatorios entre 0 y 1 de longitud igual a la del vector velocidad.
++ `$\hat{x}_i(t)$`: mejor posición en la que ha estado la partícula $i$ hasta el momento.
++ `$x_i(t)$`: posición de la partícula $i$ en el momento $t$.
++ `$c_2$`: coeficiente social.
++ `$r_2$`: vector de valores aleatorios entre 0 y 1 de longitud igual a la del vector velocidad.
++ `$g(t)$`: posición de todo el enjambre en el momento $t$, el mejor valor global.
+
+
+Para comprender como se relaciona esta ecuación con el movimiento de la partícula, resulta útil diferenciar tres partes:
+
++ $wv_i(t)$ es la componente de inercia, responsable de mantener a la partícula moviéndose en la dirección en la que lo ha estado haciendo hasta el momento. El valor recomendado del coeficiente de inercia $w$ suele ser entre 0.8 y 1.2. Si $w<1$, la partícula se va desacelerando a medida que avanzan las iteraciones, esto se traduce en menor exploración pero una convergencia hacia el óptimo más rápida. Si $w>1$, la partícula se va acelerando, lo que permite explorar más zonas del espacio de la función pero dificulta la convergencia.
+
+
++ $c_1r_1[\hat{x}_i(t) - x_i(t)]$ es la componente cognitiva, responsable de que la partícula tienda a moverse hacia la posición donde ha obtenido mejores resultados hasta el momento. El coeficiente cognitivo $c_1$ suele estar acotado en el rango [0, 2], siendo 2 el valor recomendado. $r_1$ es un vector de valores aleatorios entre 0 y 1 (un valor por cada dimensión) que aporta cierto comportamiento estocástico al movimiento de las partículas, mejorando así la capacidad de escapar de mínimos locales.
+
+
++ $c_2r_2[g(t) - x_i(t)]$ es la componente social, responsable de que la partícula tienda a moverse hacia la mejor posición encontrada por el enjambre hasta el momento. Puede interpretarse como el "conocimiento colectivo". El valor del coeficiente social $c_2$ suele estar acotado en el rango [0, 2], siendo 2 el valor recomendado. $r_2$ es un vector de valores aleatorios entre 0 y 1 (un valor por cada dimensión) que aporta cierto comportamiento estocástico al movimiento de las partículas, mejorando así la capacidad de escapar de mínimos locales.
+
+
++ La magnitud relativa entre la componente cognitiva y la componente social permite regular el comportamiento exploratorio del algoritmo. Cuanto mayor es el valor de $c_1$ respecto a $c_2$, mayor independencia de movimiento tiene cada partícula, lo que permite mayor exploración pero mayor lentitud en la convergencia. Por el contrario, cuanto mayor es el valor de $c_2$ respecto a $c_1$, más obligadas están las partículas a moverse hacia la mejor región encontrada hasta el momento, lo que reduce la exploración pero acelera la convergencia.
+
+
++ En algunas versiones del algoritmo, $r_1$ y $r_2$ son escalares en lugar de vectores. Multiplicar cada componente de la velocidad por un valor aleatorio distinto añade mayores fluctuaciones al movimiento de las partículas, lo que, aun a riesgo de retrasar la convergencia, suele generar mejores resultados.
+
+Una vez calculada la nueva velocidad, se puede actualizar la posición de la partícula con la ecuación:
+
+$$x_i(t+1) = x_i(t) + v_i(t+1)$$
+
+
+Uno de los principales problemas del algoritmo *PSO* es que las partículas suelen adquirir velocidades excesivamente altas, lo que les lleva a salirse de los límites del espacio de búsqueda o a que sean incapaces de converger en la región óptima. Es en este paso del algoritmo donde más investigaciones y adaptaciones se han hecho. Algunas de las soluciones son:
+
++ Limitar la velocidad máxima que puede alcanzar una partícula. Siendo [$x_{min}$, $x_{max}$] los límites inferior y superior del espacio de búsqueda de cada variable, la velocidad máxima que puede alcanzar la partícula en esa dirección es $v_{max} = k(x_{max} - x_{min})/2$, donde $k$ suele ser un valor entre 0.1 y 1.
+
+
++ Si el valor de alguna de las variables excede los límites impuestos, se sobrescribe con el valor del límite correspondiente y se reinicia su velocidad a cero. 
+
+
++ Reducción lineal del coeficiente de inercia $w$. Esta estrategia consiste en ir reduciendo el coeficiente de inercia a medida que avanzan las iteraciones. En las primeras iteraciones, las partículas tiene mucha capacidad de exploración y, a medida que avanza el proceso, va reduciéndose su velocidad favoreciendo la convergencia. Puede conseguirse este efecto con la ecuación:
+
+$$w_t = (w_{max} - w_{min}) \frac{t_{max} -t}{t_{max}} + w_{min}$$
+
+donde:
+
++ `$w_{t}$`: coeficiente de inercia en la iteración $t$.
++ `$w_{max}$`: coeficiente de inercia máximo. Valor con el que se inicia el algoritmo. Valor recomendado de 0.9.
++ `$w_{min}$`: coeficiente de inercia mínimo. Valor que se alcanza en la última iteración. Valor recomendado de 0.4.
++ `$t_{max}$`: número máximo de iteraciones.
+
+
+La siguiente función actualiza la posición de una partícula teniendo en cuenta su posición y velocidad actual, la mejor posición global encontrada por el enjambre, los coeficientes de inercia, cognitivo, social, y los límites de búsqueda.
+
+
+Ejemplo codico python
+
+```python
+import numpy as np
+```    
+    
+Ejemplo codico R
+
+```r
+print("Hola")
+paste(c("1","2")
+```
+

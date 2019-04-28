@@ -1,0 +1,5 @@
+Particula
+================
+
+.. automodule:: pso.clases.class_particula
+   :members:

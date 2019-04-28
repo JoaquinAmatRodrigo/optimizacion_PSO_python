@@ -1,0 +1,11 @@
+Clases del optimizador
+================================================================================
+
+El optimizador consta de de dos clases.
+
+
+.. toctree::
+
+    pso.clases.particula
+    pso.clases.enjambre
+    

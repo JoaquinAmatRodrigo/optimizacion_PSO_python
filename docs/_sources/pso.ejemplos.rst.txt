@@ -1,0 +1,111 @@
+Ejemplos
+================================================================================
+
+
+
+.. code-block:: python
+
+    import numpy as np
+    import random
+    import warnings
+    import random
+    import copy
+    import pandas as pd
+    import time
+    import matplotlib
+    import matplotlib.pyplot as plt
+    from datetime import datetime
+    
+    # Función objetivo que se quiere minimizar
+    def funcion_objetivo(x_0, x_1):
+        """
+        Para la región acotada entre −10<=x_0<=0 y −6.5<=x_1<=0 la función tiene
+        múltiples mínimos locales y un único minimo global que se encuentra en
+        f(−3.1302468,−1.5821422) = −106.7645367
+        """
+        f = np.sin(x_1)*np.exp(1-np.cos(x_0))**2 \
+            + np.cos(x_0)*np.exp(1-np.sin(x_1))**2 \
+            + (x_0-x_1)**2
+        return(f)
+    
+    # Contour plot función objetivo
+    x_0 = np.linspace(start = -10, stop = 0, num = 100)
+    x_1 = np.linspace(start = -6.5, stop = 0, num = 100)
+    x_0, x_1 = np.meshgrid(x_0, x_1)
+    z = funcion_objetivo(x_0, x_1)
+    plt.contour(x_0, x_1, z, 35, cmap='RdGy')
+    
+    enjambre = Enjambre(
+                   n_particulas = 50,
+                   n_variables  = 2,
+                   limites_inf  = [-10, -6.5],
+                   limites_sup  = [0, 0],
+                   verbose      = False
+                )
+    
+    enjambre.optimizar(
+        funcion_objetivo = funcion_objetivo,
+        optimizacion     = "minimizar",
+        n_iteraciones    = 250,
+        inercia          = 0.8,
+        reduc_inercia    = True,
+        inercia_max      = 0.9,
+        inercia_min      = 0.4,
+        peso_cognitivo   = 1,
+        peso_social      = 2,
+        parada_temprana  = True,
+        rondas_parada    = 5,
+        tolerancia_parada = 10**-3,
+        verbose          = False
+    )
+    
+    enjambre
+    
+    # Evolución de la optimización
+    enjambre.resultados_df['mejor_valor_enjambre'].plot()
+    
+    # Representación evolución partículas gráfico animado
+    import matplotlib.animation as animation
+    import plotly_express as px
+    
+    def extraer_posicion(particula):
+        posicion = particula.posicion
+        return(posicion)
+    
+    lista_df_temp = []
+    
+    for i in np.arange(len(enjambre.historico_particulas)):
+        posiciones = list(map(extraer_posicion, enjambre.historico_particulas[i]))
+        df_temp = pd.DataFrame({"iteracion": i, "posicion": posiciones})
+        lista_df_temp.append(df_temp)
+    
+    df_posiciones = pd.concat(lista_df_temp)
+    
+    df_posiciones[['x_0','x_1']] = pd.DataFrame(df_posiciones["posicion"].values.tolist(),
+                                                index= df_posiciones.index)
+    
+    df_posiciones.head()
+    
+    px.scatter(
+        df_posiciones,
+        x       = "x_0",
+        y       = "x_1",
+        range_x = [-10, 0],
+        range_y = [-6.5, 0],
+        animation_frame = "iteracion"
+    )
+    
+    fig = plt.figure(figsize=(8,5))
+    plt.xlim(-10,0)
+    plt.ylim(-6.5,0)
+    
+    def animate(i):
+        p2 = fig.clear()
+        plt.xlim(-10,0)
+        plt.ylim(-6.5,0)
+        df_posiciones_i = df_posiciones[df_posiciones["iteracion"] == i][["x_0", "x_1"]]
+        p1 = plt.contour(x_0, x_1, z, 35, cmap='RdGy')
+        p2 = plt.scatter(df_posiciones_i["x_0"], df_posiciones_i["x_1"])
+    
+    ani = matplotlib.animation.FuncAnimation(fig, animate, repeat=True, blit=True)
+    plt.show()

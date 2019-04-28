@@ -1,0 +1,18 @@
+OPTIMIZACIÓN PSO CON PYTHON 
+================================================================================
+
+.. toctree::
+   :maxdepth: 4
+   :caption: Tabla de contenidos:
+
+   pso.introduccion
+   pso.codigo
+   pso.ejemplos
+
+
+Indices and tables
+================================================================================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
