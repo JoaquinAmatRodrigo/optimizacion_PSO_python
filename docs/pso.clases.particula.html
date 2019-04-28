@@ -157,7 +157,7 @@
 <dl class="class">
 <dt id="pso.clases.class_particula.Particula">
 <em class="property">class </em><code class="descclassname">pso.clases.class_particula.</code><code class="descname">Particula</code><span class="sig-paren">(</span><em>n_variables</em>, <em>limites_inf=None</em>, <em>limites_sup=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pso/clases/class_particula.html#Particula"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pso.clases.class_particula.Particula" title="Permalink to this definition">¶</a></dt>
-<dd><p>Esta clase representa una partícula con una posición inicial definida por
+<dd><p>Esta clase representa nueva partícula con una posición inicial definida por
 una combinación de valores numéricos aleatorios y velocidad de 0. El rango
 de posibles valores para cada variable (posición) puede estar acotado. Al
 crear una nueva partícula, solo se dispone de información sobre su posición
@@ -283,20 +283,6 @@ con la posición actual.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="pso.clases.class_particula.Particula.posicion">
-<code class="descname">posicion</code><a class="headerlink" href="#pso.clases.class_particula.Particula.posicion" title="Permalink to this definition">¶</a></dt>
-<dd><p>posición actual de la partícula.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>numpy.ndarray</cite></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -315,8 +301,8 @@ con la posición actual.</p>
 <p>Ejemplo creación partícula.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">part</span> <span class="o">=</span> <span class="n">Particula</span><span class="p">(</span>
 <span class="go">                n_variables = 3,</span>
-<span class="go">                limites_inf = [4,10,20],</span>
-<span class="go">                limites_sup = [-1,2,0],</span>
+<span class="go">                limites_inf = [-1,2,0],</span>
+<span class="go">                limites_sup = [4,10,20],</span>
 <span class="go">                verbose     = True</span>
 <span class="go">                )</span>
 </pre></div>
@@ -364,8 +350,8 @@ el mayor o el menor valor que ha tenido hasta el momento.</li>
 <p>Ejemplo evaluar partícula con una función objetivo.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">part</span> <span class="o">=</span> <span class="n">Particula</span><span class="p">(</span>
 <span class="go">        n_variables = 3,</span>
-<span class="go">        limites_inf = [4,10,20],</span>
-<span class="go">        limites_sup = [-1,2,None],</span>
+<span class="go">        limites_inf = [-1,2,None],</span>
+<span class="go">        limites_sup = [4,10,20],</span>
 <span class="go">        verbose     = True</span>
 <span class="go">        )</span>
 </pre></div>
@@ -409,8 +395,8 @@ salga de la zona de búsqueda acotada por los límites.</p>
 <p>Ejemplo mover partícula.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">part</span> <span class="o">=</span> <span class="n">Particula</span><span class="p">(</span>
 <span class="go">        n_variables = 3,</span>
-<span class="go">        limites_inf = [4,10,20],</span>
-<span class="go">        limites_sup = [-1,2,None],</span>
+<span class="go">        limites_inf = [-1,2,None],</span>
+<span class="go">        limites_sup = [4,10,20],</span>
 <span class="go">        verbose     = True</span>
 <span class="go">        )</span>
 </pre></div>
