@@ -17,8 +17,6 @@ import random
 import copy
 import pandas as pd
 import time
-import matplotlib
-import matplotlib.pyplot as plt
 from datetime import datetime
 
 #%%
@@ -27,7 +25,8 @@ from datetime import datetime
 ################################################################################
 
 class Particula:
-    """Esta clase representa nueva partícula con una posición inicial definida por
+    """
+    Esta clase representa nueva partícula con una posición inicial definida por
     una combinación de valores numéricos aleatorios y velocidad de 0. El rango
     de posibles valores para cada variable (posición) puede estar acotado. Al
     crear una nueva partícula, solo se dispone de información sobre su posición 
@@ -242,9 +241,10 @@ class Particula:
         return(texto)
 
     def evaluar_particula(self, funcion_objetivo, optimizacion, verbose = False):
-        """Este método evalúa una partícula calculando el valor que toma la
-        función objetivo en la posición en la que se encuentra. Además, compara
-        si la nueva posición es mejor que las anteriores. Modifica los atributos
+        """
+        Este método evalúa una partícula calculando el valor que toma la función
+        objetivo en la posición en la que se encuentra. Además, compara si la
+        nueva posición es mejor que las anteriores. Modifica los atributos
         valor, mejor_valor y mejor_posicion de la partícula.
         
         Parameters
@@ -262,7 +262,8 @@ class Particula:
         Raises
         ------
         raise Exception
-            si el argumento `optimizacion` es distinto de 'maximizar' o 'minimizar'
+            si el argumento `optimizacion` es distinto de 'maximizar' o
+            'minimizar'.
 
         Examples
         --------
@@ -291,7 +292,7 @@ class Particula:
         # ----------------------------------------------------------------------
         if not optimizacion in ["maximizar", "minimizar"]:
             raise Exception(
-                "El argumento optimizacion debe ser: maximizar o minimizar"
+                "El argumento optimizacion debe ser: 'maximizar' o 'minimizar'"
                 )
 
         # EVALUACIÓN DE LA FUNCIÓN OBJETIVO EN LA POSICIÓN ACTUAL
@@ -302,9 +303,9 @@ class Particula:
         # ----------------------------------------------------------------------
         # Se compara el valor actual con el mejor valor histórico. La comparación
         # es distinta dependiendo de si se desea maximizar o minimizar.
-        # Si no existe ningún valor histórico, se almacena el actual. Si ya existe
-        # algún valor histórico se compara con el actual y, de ser mejor este
-        # último, se sobrescribe.
+        # Si no existe ningún valor histórico, se almacena el actual. Si ya 
+        # existe algún valor histórico se compara con el actual y, de ser mejor 
+        # este último, se sobrescribe.
         
         if self.mejor_valor is None:
             self.mejor_valor    = np.copy(self.valor)
@@ -429,8 +430,7 @@ class Particula:
 
 class Enjambre:
     """
-    Esta clase crea un enjambre de n partículas. El rango de posibles valores
-    para cada variable (posición) puede estar acotado.
+    Esta clase crea un enjambre de n partículas.
 
     Parameters
     ----------
@@ -507,9 +507,6 @@ class Enjambre:
     iter_optimizacion : `int`
         número de iteraciones de optimizacion.
 
-    verbose : `bool`, optional
-        mostrar información del proceso por pantalla. (default is ``False``)
-
     Examples
     --------
     Ejemplo crear enjambre
@@ -535,8 +532,6 @@ class Enjambre:
         self.limites_inf = limites_inf
         # Límite superior de cada variable
         self.limites_sup = limites_sup
-        # Verbose
-        self.verbose = verbose
         # Lista de las partículas del enjambre
         self.particulas = []
         # Etiqueta para saber si el enjambre ha sido optimizado
@@ -584,7 +579,7 @@ class Enjambre:
                             n_variables = self.n_variables,
                             limites_inf = self.limites_inf,
                             limites_sup = self.limites_sup,
-                            verbose     = self.verbose
+                            verbose     = verbose
                           )
             self.particulas.append(particula_i)
 
@@ -595,10 +590,10 @@ class Enjambre:
             print("Enjambre creado")
             print("---------------")
             print("Número de partículas: " + str(self.n_particulas))
-            print("Límites inferiores de cada variable: " \
-                  + np.array2string(self.limites_inf))
+            print("Límites inferiores de cada variable: "
+                  + str(self.limites_inf))
             print("Límites superiores de cada variable: " \
-                  + np.array2string(self.limites_sup))
+                  + str(self.limites_sup))
             print("")
 
     def __repr__(self):
@@ -757,8 +752,7 @@ class Enjambre:
             print("-----------------")
             print("Enjambre evaluado")
             print("-----------------")
-            print("Mejor posición encontrada : "
-                  + np.array2string(self.mejor_posicion))
+            print("Mejor posición encontrada : " + str(self.mejor_posicion))
             print("Mejor valor encontrado : " + str(self.mejor_valor))
             print("")
 
@@ -769,7 +763,7 @@ class Enjambre:
 
         Parameters
         ----------
-        optimizacion : {maximizar o minimizar}
+        optimizacion : {'maximizar', 'minimizar'}
             si se desea maximizar o minimizar la función.
 
         inercia : `float` or `int`
@@ -822,7 +816,7 @@ class Enjambre:
         funcion_objetivo : `function`
             función que se quiere optimizar.
 
-        optimizacion : {maximizar o minimizar}
+        optimizacion : {'maximizar' o 'minimizar'}
             si se desea maximizar o minimizar la función.
 
         m_iteraciones : `int` , optional
@@ -850,17 +844,17 @@ class Enjambre:
             (default is ``0.4``)
 
         parada_temprana : `bool`, optional
-            si durante las últimas `rondas_parada` generaciones la diferencia
-            absoluta entre mejores individuos no es superior al valor de 
+            si durante las últimas `rondas_parada` iteraciones la diferencia
+            absoluta entre mejores partículas no es superior al valor de 
             `tolerancia_parada`, se detiene el algoritmo y no se crean nuevas
-            generaciones. (default is ``False``)
+            iteraciones. (default is ``False``)
 
         rondas_parada : `int`, optional
-            número de generaciones consecutivas sin mejora mínima para que se
+            número de iteraciones consecutivas sin mejora mínima para que se
             active la parada temprana. (default is ``None``)
 
         tolerancia_parada : `float` or `int`, optional
-            valor mínimo que debe tener la diferencia de generaciones consecutivas
+            valor mínimo que debe tener la diferencia de iteraciones consecutivas
             para considerar que hay cambio. (default is ``None``)
 
          verbose : `bool`, optional
@@ -898,19 +892,19 @@ class Enjambre:
                         )
 
         >>> enjambre.optimizar(
-                funcion_objetivo = funcion_objetivo,
-                optimizacion     = "minimizar",
-                n_iteraciones    = 250,
-                inercia          = 0.8,
-                reduc_inercia    = True,
-                inercia_max      = 0.9,
-                inercia_min      = 0.4,
-                peso_cognitivo   = 1,
-                peso_social      = 2,
-                parada_temprana  = True,
-                rondas_parada    = 5,
+                funcion_objetivo  = funcion_objetivo,
+                optimizacion      = "minimizar",
+                n_iteraciones     = 250,
+                inercia           = 0.8,
+                reduc_inercia     = True,
+                inercia_max       = 0.9,
+                inercia_min       = 0.4,
+                peso_cognitivo    = 1,
+                peso_social       = 2,
+                parada_temprana   = True,
+                rondas_parada     = 5,
                 tolerancia_parada = 10**-3,
-                verbose          = False
+                verbose           = False
             )
 
         """
@@ -949,7 +943,7 @@ class Enjambre:
             # ------------------------------------------------------------------
             self.evaluar_enjambre(
                 funcion_objetivo = funcion_objetivo,
-                optimizacion     = "minimizar",
+                optimizacion     = optimizacion,
                 verbose          = verbose
                 )
 
@@ -972,9 +966,9 @@ class Enjambre:
 
             # CRITERIO DE PARADA
             # ------------------------------------------------------------------
-            # Si durante las últimas n generaciones, la diferencia absoluta entre
+            # Si durante las últimas n iteraciones, la diferencia absoluta entre
             # mejores partículas no es superior al valor de tolerancia_parada,
-            # se detiene el algoritmo y no se crean nuevas generaciones.
+            # se detiene el algoritmo y no se crean nuevas iteraciones.
             if parada_temprana and i > rondas_parada:
                 ultimos_n = np.array(self.diferencia_abs[-(rondas_parada): ])
                 if all(ultimos_n < tolerancia_parada):
@@ -1007,9 +1001,13 @@ class Enjambre:
         self.optimizado = True
         self.iter_optimizacion = i
         
-        # IDENTIFICACIÓN DEL MEJOR INDIVIDUO DE TODO EL PROCESO
+        # IDENTIFICACIÓN DEL MEJOR PARTÍCULA DE TODO EL PROCESO
         # ----------------------------------------------------------------------
-        indice_valor_optimo  = np.argmin(np.array(self.historico_mejor_valor))
+        if optimizacion == "minimizar":
+            indice_valor_optimo=np.argmin(np.array(self.historico_mejor_valor))
+        else:
+            indice_valor_optimo=np.argmax(np.array(self.historico_mejor_valor))
+
         self.valor_optimo    = self.historico_mejor_valor[indice_valor_optimo]
         self.posicion_optima = self.historico_mejor_posicion[indice_valor_optimo]
         
@@ -1030,3 +1028,6 @@ class Enjambre:
         print("-------------------------------------------")
         print("Duración optimización: " + str(end - start))
         print("Número de iteraciones: " + str(self.iter_optimizacion))
+        print("Posición óptima: " + str(self.posicion_optima))
+        print("Valor óptimo: " + str(self.valor_optimo))
+        print("")
