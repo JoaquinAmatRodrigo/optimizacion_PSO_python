@@ -157,8 +157,7 @@
 <dl class="class">
 <dt id="pso.clases.class_enjambre.Enjambre">
 <em class="property">class </em><code class="descclassname">pso.clases.class_enjambre.</code><code class="descname">Enjambre</code><span class="sig-paren">(</span><em>n_particulas</em>, <em>n_variables</em>, <em>limites_inf=None</em>, <em>limites_sup=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pso/clases/class_enjambre.html#Enjambre"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre" title="Permalink to this definition">¶</a></dt>
-<dd><p>Esta clase crea un enjambre de n partículas. El rango de posibles valores
-para cada variable (posición) puede estar acotado.</p>
+<dd><p>Esta clase crea un enjambre de n partículas.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -172,7 +171,7 @@ el valor (-10**3).</li>
 <li><strong>limites_sup</strong> (<cite>list</cite> or <cite>numpy.ndarray</cite>) – límite superior de cada variable. Si solo se quiere predefinir límites
 de alguna variable, emplear <code class="docutils literal notranslate"><span class="pre">None</span></code>. Los``None`` serán remplazados por
 el valor (+10**3).</li>
-<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información de la partícula creada. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
+<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información del proceso por pantalla. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
 </ul>
 </td>
 </tr>
@@ -406,20 +405,6 @@ cada iteración, así como la mejora respecto a la iteración anterior.</p>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="pso.clases.class_enjambre.Enjambre.verbose">
-<code class="descname">verbose</code><a class="headerlink" href="#pso.clases.class_enjambre.Enjambre.verbose" title="Permalink to this definition">¶</a></dt>
-<dd><p>mostrar información de la partícula creada. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>bool</cite>, optional</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 <p class="rubric">Examples</p>
 <p>Ejemplo crear enjambre</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enjambre</span> <span class="o">=</span> <span class="n">Enjambre</span><span class="p">(</span>
@@ -465,7 +450,7 @@ valores e identifica la mejor partícula.</p>
 <li><strong>funcion_objetivo</strong> (<cite>function</cite>) – función que se quiere optimizar.</li>
 <li><strong>optimizacion</strong> (<em>{maximizar o minimizar}</em>) – Dependiendo de esto, el mejor valor histórico de la partícula será
 el mayor o el menor valorque ha tenido hasta el momento.</li>
-<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información de la partícula creada. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
+<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información del proceso por pantalla. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
 </ul>
 </td>
 </tr>
@@ -535,11 +520,11 @@ que <cite>self.n_particulas</cite> se muestran todas.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>optimizacion</strong> (<em>{maximizar o minimizar}</em>) – si se desea maximizar o minimizar la función.</li>
+<li><strong>optimizacion</strong> (<em>{'maximizar'</em><em>, </em><em>'minimizar'}</em>) – si se desea maximizar o minimizar la función.</li>
 <li><strong>inercia</strong> (<cite>float</cite> or <cite>int</cite>) – coeficiente de inercia.</li>
 <li><strong>peso_cognitivo</strong> (<cite>float</cite> or <cite>int</cite>) – coeficiente cognitivo.</li>
 <li><strong>peso_social</strong> (<cite>float</cite> or <cite>int</cite>) – coeficiente social.</li>
-<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información de la partícula creada. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
+<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información del proceso por pantalla. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
 </ul>
 </td>
 </tr>
@@ -557,7 +542,7 @@ que <cite>self.n_particulas</cite> se muestran todas.</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>funcion_objetivo</strong> (<cite>function</cite>) – función que se quiere optimizar.</li>
-<li><strong>optimizacion</strong> (<em>{maximizar o minimizar}</em>) – si se desea maximizar o minimizar la función.</li>
+<li><strong>optimizacion</strong> (<em>{'maximizar' o 'minimizar'}</em>) – si se desea maximizar o minimizar la función.</li>
 <li><strong>m_iteraciones</strong> (<cite>int</cite> , optional) – numero de iteraciones de optimización. (default is <code class="docutils literal notranslate"><span class="pre">50</span></code>)</li>
 <li><strong>inercia</strong> (<cite>float</cite> or <cite>int</cite>, optional) – coeficiente de inercia. (default is <code class="docutils literal notranslate"><span class="pre">0.8</span></code>)</li>
 <li><strong>peso_cognitivo</strong> (<cite>float</cite> or <cite>int</cite>, optional) – coeficiente cognitivo. (default is <code class="docutils literal notranslate"><span class="pre">2</span></code>)</li>
@@ -568,17 +553,17 @@ argumento <cite>inercia</cite> es ignorado. (default is <code class="docutils li
 (default is <code class="docutils literal notranslate"><span class="pre">0.9</span></code>)</li>
 <li><strong>inercia_min</strong> (<cite>float</cite> or <cite>int</cite>, optional) – valor minimo del coeficiente de inercia si se activa <cite>reduc_min</cite>.
 (default is <code class="docutils literal notranslate"><span class="pre">0.4</span></code>)</li>
-<li><strong>parada_temprana</strong> (<cite>bool</cite>, optional) – si durante las últimas <cite>rondas_parada</cite> generaciones la diferencia
-absoluta entre mejores individuos no es superior al valor de
+<li><strong>parada_temprana</strong> (<cite>bool</cite>, optional) – si durante las últimas <cite>rondas_parada</cite> iteraciones la diferencia
+absoluta entre mejores partículas no es superior al valor de
 <cite>tolerancia_parada</cite>, se detiene el algoritmo y no se crean nuevas
-generaciones. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
-<li><strong>rondas_parada</strong> (<cite>int</cite>, optional) – número de generaciones consecutivas sin mejora mínima para que se
+iteraciones. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
+<li><strong>rondas_parada</strong> (<cite>int</cite>, optional) – número de iteraciones consecutivas sin mejora mínima para que se
 active la parada temprana. (default is <code class="docutils literal notranslate"><span class="pre">None</span></code>)</li>
 <li><strong>tolerancia_parada</strong> (<cite>float</cite> or <cite>int</cite>, optional) – <dl class="docutils">
-<dt>valor mínimo que debe tener la diferencia de generaciones consecutivas</dt>
+<dt>valor mínimo que debe tener la diferencia de iteraciones consecutivas</dt>
 <dd>para considerar que hay cambio. (default is <code class="docutils literal notranslate"><span class="pre">None</span></code>)</dd>
 <dt>verbose <span class="classifier-delimiter">:</span> <span class="classifier"><cite>bool</cite>, optional</span></dt>
-<dd>mostrar información de la partícula creada. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</dd>
+<dd>mostrar información del proceso por pantalla. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</dd>
 </dl>
 </li>
 </ul>
@@ -598,9 +583,9 @@ o <cite>inercia_min</cite> son <code class="docutils literal notranslate"><span 
 <p>Ejemplo optimización</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">funcion_objetivo</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">):</span>
 <span class="go">        # Para la región acotada entre −10&lt;=x_0&lt;=0 y −6.5&lt;=x_1&lt;=0 la</span>
-<span class="go">        # función tiene múltiples mínimos locales y un único minimo</span>
+<span class="go">        # función tiene múltiples mínimos locales y un único mínimo</span>
 <span class="go">        # global en f(−3.1302468,−1.5821422)= −106.7645367.</span>
-<span class="go">        f = np.sin(x_1)*np.exp(1-np.cos(x_0))**2 + np.cos(x_0)*np.exp(1-np.sin(x_1))**2 + (x_0-x_1)**2</span>
+<span class="go">        f = np.sin(x_1)*np.exp(1-np.cos(x_0))**2                     + np.cos(x_0)*np.exp(1-np.sin(x_1))**2                     + (x_0-x_1)**2</span>
 <span class="go">        return(f)</span>
 </pre></div>
 </div>
@@ -614,19 +599,19 @@ o <cite>inercia_min</cite> son <code class="docutils literal notranslate"><span 
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enjambre</span><span class="o">.</span><span class="n">optimizar</span><span class="p">(</span>
-<span class="go">        funcion_objetivo = funcion_objetivo,</span>
-<span class="go">        optimizacion     = &quot;minimizar&quot;,</span>
-<span class="go">        n_iteraciones    = 250,</span>
-<span class="go">        inercia          = 0.8,</span>
-<span class="go">        reduc_inercia    = True,</span>
-<span class="go">        inercia_max      = 0.9,</span>
-<span class="go">        inercia_min      = 0.4,</span>
-<span class="go">        peso_cognitivo   = 1,</span>
-<span class="go">        peso_social      = 2,</span>
-<span class="go">        parada_temprana  = True,</span>
-<span class="go">        rondas_parada    = 5,</span>
+<span class="go">        funcion_objetivo  = funcion_objetivo,</span>
+<span class="go">        optimizacion      = &quot;minimizar&quot;,</span>
+<span class="go">        n_iteraciones     = 250,</span>
+<span class="go">        inercia           = 0.8,</span>
+<span class="go">        reduc_inercia     = True,</span>
+<span class="go">        inercia_max       = 0.9,</span>
+<span class="go">        inercia_min       = 0.4,</span>
+<span class="go">        peso_cognitivo    = 1,</span>
+<span class="go">        peso_social       = 2,</span>
+<span class="go">        parada_temprana   = True,</span>
+<span class="go">        rondas_parada     = 5,</span>
 <span class="go">        tolerancia_parada = 10**-3,</span>
-<span class="go">        verbose          = False</span>
+<span class="go">        verbose           = False</span>
 <span class="go">    )</span>
 </pre></div>
 </div>

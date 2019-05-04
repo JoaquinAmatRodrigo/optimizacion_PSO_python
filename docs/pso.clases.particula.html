@@ -283,6 +283,20 @@ con la posición actual.</p>
 </table>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="pso.clases.class_particula.Particula.posicion">
+<code class="descname">posicion</code><a class="headerlink" href="#pso.clases.class_particula.Particula.posicion" title="Permalink to this definition">¶</a></dt>
+<dd><p>posición actual de la partícula.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><cite>numpy.ndarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -325,9 +339,9 @@ con la posición actual.</p>
 <dl class="method">
 <dt id="pso.clases.class_particula.Particula.evaluar_particula">
 <code class="descname">evaluar_particula</code><span class="sig-paren">(</span><em>funcion_objetivo</em>, <em>optimizacion</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pso/clases/class_particula.html#Particula.evaluar_particula"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pso.clases.class_particula.Particula.evaluar_particula" title="Permalink to this definition">¶</a></dt>
-<dd><p>Este método evalúa una partícula calculando el valor que toma la
-función objetivo en la posición en la que se encuentra. Además, compara
-si la nueva posición es mejor que las anteriores. Modifica los atributos
+<dd><p>Este método evalúa una partícula calculando el valor que toma la función
+objetivo en la posición en la que se encuentra. Además, compara si la
+nueva posición es mejor que las anteriores. Modifica los atributos
 valor, mejor_valor y mejor_posicion de la partícula.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -341,7 +355,8 @@ el mayor o el menor valor que ha tenido hasta el momento.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><em>raise Exception</em> – si el argumento <cite>optimizacion</cite> es distinto de ‘maximizar’ o ‘minimizar’</p>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><em>raise Exception</em> – si el argumento <cite>optimizacion</cite> es distinto de ‘maximizar’ o
+‘minimizar’.</p>
 </td>
 </tr>
 </tbody>
@@ -350,7 +365,7 @@ el mayor o el menor valor que ha tenido hasta el momento.</li>
 <p>Ejemplo evaluar partícula con una función objetivo.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">part</span> <span class="o">=</span> <span class="n">Particula</span><span class="p">(</span>
 <span class="go">        n_variables = 3,</span>
-<span class="go">        limites_inf = [-1,2,None],</span>
+<span class="go">        limites_inf = [-1,2,0],</span>
 <span class="go">        limites_sup = [4,10,20],</span>
 <span class="go">        verbose     = True</span>
 <span class="go">        )</span>
@@ -385,7 +400,7 @@ salga de la zona de búsqueda acotada por los límites.</p>
 <li><strong>inercia</strong> (<cite>float</cite>, optional) – coeficiente de inercia. (default is 0.8)</li>
 <li><strong>peso_cognitivo</strong> (<cite>float</cite>, optional) – coeficiente cognitivo. (default is 2)</li>
 <li><strong>peso_social</strong> (<cite>float</cite>, optional) – coeficiente social. (default is 2)</li>
-<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información de la partícula creada. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
+<li><strong>verbose</strong> (<cite>bool</cite>, optional) – mostrar información del proceso por pantalla. (default is <code class="docutils literal notranslate"><span class="pre">False</span></code>)</li>
 </ul>
 </td>
 </tr>
@@ -395,7 +410,7 @@ salga de la zona de búsqueda acotada por los límites.</p>
 <p>Ejemplo mover partícula.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">part</span> <span class="o">=</span> <span class="n">Particula</span><span class="p">(</span>
 <span class="go">        n_variables = 3,</span>
-<span class="go">        limites_inf = [-1,2,None],</span>
+<span class="go">        limites_inf = [-1,2,0],</span>
 <span class="go">        limites_sup = [4,10,20],</span>
 <span class="go">        verbose     = True</span>
 <span class="go">        )</span>

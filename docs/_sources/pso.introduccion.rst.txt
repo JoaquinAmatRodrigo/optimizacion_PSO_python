@@ -27,7 +27,7 @@ Aunque existen variaciones, algunas de las cuales se describen a lo largo de est
 2) Evaluar cada partícula con la función objetivo.
 
 
-3) Actualizar la posición y velocidad de cada partícula. Esta es la parte que proporciona al algoritmo la capacidad de optimización. En el apartado [Mover partícula](#Mover partícula) se describe con detalle el proceso.
+3) Actualizar la posición y velocidad de cada partícula. Esta es la parte que proporciona al algoritmo la capacidad de optimización. En el apartado **Mover partícula** se describe con detalle el proceso.
 
 
 4) Si no se cumple un criterio de parada, volver al paso 2.

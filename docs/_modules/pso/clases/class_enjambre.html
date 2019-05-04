@@ -157,8 +157,7 @@
 
 <div class="viewcode-block" id="Enjambre"><a class="viewcode-back" href="../../../pso.codigo.html#pso.clases.class_enjambre.Enjambre">[docs]</a><span class="k">class</span> <span class="nc">Enjambre</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Esta clase crea un enjambre de n partículas. El rango de posibles valores</span>
-<span class="sd">    para cada variable (posición) puede estar acotado.</span>
+<span class="sd">    Esta clase crea un enjambre de n partículas.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -235,9 +234,6 @@
 <span class="sd">    iter_optimizacion : `int`</span>
 <span class="sd">        número de iteraciones de optimizacion.</span>
 
-<span class="sd">    verbose : `bool`, optional</span>
-<span class="sd">        mostrar información del proceso por pantalla. (default is ``False``)</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    Ejemplo crear enjambre</span>
@@ -263,8 +259,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span> <span class="o">=</span> <span class="n">limites_inf</span>
         <span class="c1"># Límite superior de cada variable</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span> <span class="o">=</span> <span class="n">limites_sup</span>
-        <span class="c1"># Verbose</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
         <span class="c1"># Lista de las partículas del enjambre</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">particulas</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># Etiqueta para saber si el enjambre ha sido optimizado</span>
@@ -312,7 +306,7 @@
                             <span class="n">n_variables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span><span class="p">,</span>
                             <span class="n">limites_inf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">,</span>
                             <span class="n">limites_sup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">,</span>
-                            <span class="n">verbose</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span>
+                            <span class="n">verbose</span>     <span class="o">=</span> <span class="n">verbose</span>
                           <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">particulas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">particula_i</span><span class="p">)</span>
 
@@ -323,10 +317,10 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Enjambre creado&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---------------&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Número de partículas: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_particulas</span><span class="p">))</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Límites inferiores de cada variable: &quot;</span> \
-                  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array2string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Límites inferiores de cada variable: &quot;</span>
+                  <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_inf</span><span class="p">))</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Límites superiores de cada variable: &quot;</span> \
-                  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array2string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">))</span>
+                  <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_sup</span><span class="p">))</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -485,8 +479,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Enjambre evaluado&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------&quot;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor posición encontrada : &quot;</span>
-                  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array2string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor posición encontrada : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span><span class="p">))</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor valor encontrado : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span><span class="p">))</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
 
@@ -497,7 +490,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        optimizacion : {maximizar o minimizar}</span>
+<span class="sd">        optimizacion : {&#39;maximizar&#39;, &#39;minimizar&#39;}</span>
 <span class="sd">            si se desea maximizar o minimizar la función.</span>
 
 <span class="sd">        inercia : `float` or `int`</span>
@@ -550,7 +543,7 @@
 <span class="sd">        funcion_objetivo : `function`</span>
 <span class="sd">            función que se quiere optimizar.</span>
 
-<span class="sd">        optimizacion : {maximizar o minimizar}</span>
+<span class="sd">        optimizacion : {&#39;maximizar&#39; o &#39;minimizar&#39;}</span>
 <span class="sd">            si se desea maximizar o minimizar la función.</span>
 
 <span class="sd">        m_iteraciones : `int` , optional</span>
@@ -578,17 +571,17 @@
 <span class="sd">            (default is ``0.4``)</span>
 
 <span class="sd">        parada_temprana : `bool`, optional</span>
-<span class="sd">            si durante las últimas `rondas_parada` generaciones la diferencia</span>
-<span class="sd">            absoluta entre mejores individuos no es superior al valor de </span>
+<span class="sd">            si durante las últimas `rondas_parada` iteraciones la diferencia</span>
+<span class="sd">            absoluta entre mejores partículas no es superior al valor de </span>
 <span class="sd">            `tolerancia_parada`, se detiene el algoritmo y no se crean nuevas</span>
-<span class="sd">            generaciones. (default is ``False``)</span>
+<span class="sd">            iteraciones. (default is ``False``)</span>
 
 <span class="sd">        rondas_parada : `int`, optional</span>
-<span class="sd">            número de generaciones consecutivas sin mejora mínima para que se</span>
+<span class="sd">            número de iteraciones consecutivas sin mejora mínima para que se</span>
 <span class="sd">            active la parada temprana. (default is ``None``)</span>
 
 <span class="sd">        tolerancia_parada : `float` or `int`, optional</span>
-<span class="sd">            valor mínimo que debe tener la diferencia de generaciones consecutivas</span>
+<span class="sd">            valor mínimo que debe tener la diferencia de iteraciones consecutivas</span>
 <span class="sd">            para considerar que hay cambio. (default is ``None``)</span>
 
 <span class="sd">         verbose : `bool`, optional</span>
@@ -610,11 +603,13 @@
 
 <span class="sd">        &gt;&gt;&gt; def funcion_objetivo(x_0, x_1):</span>
 <span class="sd">                # Para la región acotada entre −10&lt;=x_0&lt;=0 y −6.5&lt;=x_1&lt;=0 la </span>
-<span class="sd">                # función tiene múltiples mínimos locales y un único minimo </span>
+<span class="sd">                # función tiene múltiples mínimos locales y un único mínimo </span>
 <span class="sd">                # global en f(−3.1302468,−1.5821422)= −106.7645367.</span>
-<span class="sd">                f = np.sin(x_1)*np.exp(1-np.cos(x_0))**2 + np.cos(x_0)*np.exp(1-np.sin(x_1))**2 + (x_0-x_1)**2</span>
+<span class="sd">                f = np.sin(x_1)*np.exp(1-np.cos(x_0))**2 \</span>
+<span class="sd">                    + np.cos(x_0)*np.exp(1-np.sin(x_1))**2 \</span>
+<span class="sd">                    + (x_0-x_1)**2</span>
 <span class="sd">                return(f)</span>
-<span class="sd">                </span>
+
 <span class="sd">        &gt;&gt;&gt; enjambre = Enjambre(</span>
 <span class="sd">                        n_particulas = 50,</span>
 <span class="sd">                        n_variables  = 2,</span>
@@ -622,21 +617,21 @@
 <span class="sd">                        limites_sup  = [0, 0],</span>
 <span class="sd">                        verbose      = False</span>
 <span class="sd">                        )</span>
-<span class="sd">                        </span>
+
 <span class="sd">        &gt;&gt;&gt; enjambre.optimizar(</span>
-<span class="sd">                funcion_objetivo = funcion_objetivo,</span>
-<span class="sd">                optimizacion     = &quot;minimizar&quot;,</span>
-<span class="sd">                n_iteraciones    = 250,</span>
-<span class="sd">                inercia          = 0.8,</span>
-<span class="sd">                reduc_inercia    = True,</span>
-<span class="sd">                inercia_max      = 0.9,</span>
-<span class="sd">                inercia_min      = 0.4,</span>
-<span class="sd">                peso_cognitivo   = 1,</span>
-<span class="sd">                peso_social      = 2,</span>
-<span class="sd">                parada_temprana  = True,</span>
-<span class="sd">                rondas_parada    = 5,</span>
+<span class="sd">                funcion_objetivo  = funcion_objetivo,</span>
+<span class="sd">                optimizacion      = &quot;minimizar&quot;,</span>
+<span class="sd">                n_iteraciones     = 250,</span>
+<span class="sd">                inercia           = 0.8,</span>
+<span class="sd">                reduc_inercia     = True,</span>
+<span class="sd">                inercia_max       = 0.9,</span>
+<span class="sd">                inercia_min       = 0.4,</span>
+<span class="sd">                peso_cognitivo    = 1,</span>
+<span class="sd">                peso_social       = 2,</span>
+<span class="sd">                parada_temprana   = True,</span>
+<span class="sd">                rondas_parada     = 5,</span>
 <span class="sd">                tolerancia_parada = 10**-3,</span>
-<span class="sd">                verbose          = False</span>
+<span class="sd">                verbose           = False</span>
 <span class="sd">            )</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -675,7 +670,7 @@
             <span class="c1"># ------------------------------------------------------------------</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">evaluar_enjambre</span><span class="p">(</span>
                 <span class="n">funcion_objetivo</span> <span class="o">=</span> <span class="n">funcion_objetivo</span><span class="p">,</span>
-                <span class="n">optimizacion</span>     <span class="o">=</span> <span class="s2">&quot;minimizar&quot;</span><span class="p">,</span>
+                <span class="n">optimizacion</span>     <span class="o">=</span> <span class="n">optimizacion</span><span class="p">,</span>
                 <span class="n">verbose</span>          <span class="o">=</span> <span class="n">verbose</span>
                 <span class="p">)</span>
 
@@ -685,7 +680,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_posicion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_posicion</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_valor</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span><span class="p">))</span>
 
-            <span class="c1"># SE CALCULA LA DIFERENCIA ABSOLUTA RESPECTO A LA ITERACION ANTERIOR</span>
+            <span class="c1"># SE CALCULA LA DIFERENCIA ABSOLUTA RESPECTO A LA ITERACIÓN ANTERIOR</span>
             <span class="c1"># ------------------------------------------------------------------</span>
             <span class="c1"># La diferencia solo puede calcularse a partir de la segunda</span>
             <span class="c1"># iteración.</span>
@@ -698,9 +693,9 @@
 
             <span class="c1"># CRITERIO DE PARADA</span>
             <span class="c1"># ------------------------------------------------------------------</span>
-            <span class="c1"># Si durante las últimas n generaciones, la diferencia absoluta entre</span>
+            <span class="c1"># Si durante las últimas n iteraciones, la diferencia absoluta entre</span>
             <span class="c1"># mejores partículas no es superior al valor de tolerancia_parada,</span>
-            <span class="c1"># se detiene el algoritmo y no se crean nuevas generaciones.</span>
+            <span class="c1"># se detiene el algoritmo y no se crean nuevas iteraciones.</span>
             <span class="k">if</span> <span class="n">parada_temprana</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">rondas_parada</span><span class="p">:</span>
                 <span class="n">ultimos_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diferencia_abs</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">rondas_parada</span><span class="p">):</span> <span class="p">])</span>
                 <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">ultimos_n</span> <span class="o">&lt;</span> <span class="n">tolerancia_parada</span><span class="p">):</span>
@@ -733,9 +728,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">optimizado</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">iter_optimizacion</span> <span class="o">=</span> <span class="n">i</span>
         
-        <span class="c1"># IDENTIFICACIÓN DEL MEJOR INDIVIDUO DE TODO EL PROCESO</span>
+        <span class="c1"># IDENTIFICACIÓN DEL MEJOR PARTÍCULA DE TODO EL PROCESO</span>
         <span class="c1"># ----------------------------------------------------------------------</span>
-        <span class="n">indice_valor_optimo</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_valor</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">optimizacion</span> <span class="o">==</span> <span class="s2">&quot;minimizar&quot;</span><span class="p">:</span>
+            <span class="n">indice_valor_optimo</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_valor</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">indice_valor_optimo</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_valor</span><span class="p">))</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">valor_optimo</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_valor</span><span class="p">[</span><span class="n">indice_valor_optimo</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">posicion_optima</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">historico_mejor_posicion</span><span class="p">[</span><span class="n">indice_valor_optimo</span><span class="p">]</span>
         
@@ -755,7 +754,10 @@
               <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">))</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------------------------------&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Duración optimización: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Número de iteraciones: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_optimizacion</span><span class="p">))</span></div></div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Número de iteraciones: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_optimizacion</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Posición óptima: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posicion_optima</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valor óptimo: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valor_optimo</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

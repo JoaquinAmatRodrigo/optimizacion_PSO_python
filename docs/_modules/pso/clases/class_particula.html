@@ -156,7 +156,8 @@
 <span class="c1">################################################################################</span>
 
 <div class="viewcode-block" id="Particula"><a class="viewcode-back" href="../../../pso.codigo.html#pso.clases.class_particula.Particula">[docs]</a><span class="k">class</span> <span class="nc">Particula</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Esta clase representa nueva partícula con una posición inicial definida por</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Esta clase representa nueva partícula con una posición inicial definida por</span>
 <span class="sd">    una combinación de valores numéricos aleatorios y velocidad de 0. El rango</span>
 <span class="sd">    de posibles valores para cada variable (posición) puede estar acotado. Al</span>
 <span class="sd">    crear una nueva partícula, solo se dispone de información sobre su posición </span>
@@ -207,6 +208,9 @@
 
 <span class="sd">    velocidad : `numpy.ndarray`</span>
 <span class="sd">        array con la velocidad actual de la partícula.</span>
+
+<span class="sd">    posicion : `numpy.ndarray`</span>
+<span class="sd">        posición actual de la partícula.</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
@@ -368,9 +372,10 @@
         <span class="k">return</span><span class="p">(</span><span class="n">texto</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Particula.evaluar_particula"><a class="viewcode-back" href="../../../pso.codigo.html#pso.clases.class_particula.Particula.evaluar_particula">[docs]</a>    <span class="k">def</span> <span class="nf">evaluar_particula</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">funcion_objetivo</span><span class="p">,</span> <span class="n">optimizacion</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Este método evalúa una partícula calculando el valor que toma la</span>
-<span class="sd">        función objetivo en la posición en la que se encuentra. Además, compara</span>
-<span class="sd">        si la nueva posición es mejor que las anteriores. Modifica los atributos</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Este método evalúa una partícula calculando el valor que toma la función</span>
+<span class="sd">        objetivo en la posición en la que se encuentra. Además, compara si la</span>
+<span class="sd">        nueva posición es mejor que las anteriores. Modifica los atributos</span>
 <span class="sd">        valor, mejor_valor y mejor_posicion de la partícula.</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
@@ -388,7 +393,8 @@
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
 <span class="sd">        raise Exception</span>
-<span class="sd">            si el argumento `optimizacion` es distinto de &#39;maximizar&#39; o &#39;minimizar&#39;</span>
+<span class="sd">            si el argumento `optimizacion` es distinto de &#39;maximizar&#39; o</span>
+<span class="sd">            &#39;minimizar&#39;.</span>
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
@@ -396,7 +402,7 @@
 
 <span class="sd">        &gt;&gt;&gt; part = Particula(</span>
 <span class="sd">                n_variables = 3,</span>
-<span class="sd">                limites_inf = [-1,2,None],</span>
+<span class="sd">                limites_inf = [-1,2,0],</span>
 <span class="sd">                limites_sup = [4,10,20],</span>
 <span class="sd">                verbose     = True</span>
 <span class="sd">                )</span>
@@ -417,7 +423,7 @@
         <span class="c1"># ----------------------------------------------------------------------</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">optimizacion</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;maximizar&quot;</span><span class="p">,</span> <span class="s2">&quot;minimizar&quot;</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="s2">&quot;El argumento optimizacion debe ser: maximizar o minimizar&quot;</span>
+                <span class="s2">&quot;El argumento optimizacion debe ser: &#39;maximizar&#39; o &#39;minimizar&#39;&quot;</span>
                 <span class="p">)</span>
 
         <span class="c1"># EVALUACIÓN DE LA FUNCIÓN OBJETIVO EN LA POSICIÓN ACTUAL</span>
@@ -428,9 +434,9 @@
         <span class="c1"># ----------------------------------------------------------------------</span>
         <span class="c1"># Se compara el valor actual con el mejor valor histórico. La comparación</span>
         <span class="c1"># es distinta dependiendo de si se desea maximizar o minimizar.</span>
-        <span class="c1"># Si no existe ningún valor histórico, se almacena el actual. Si ya existe</span>
-        <span class="c1"># algún valor histórico se compara con el actual y, de ser mejor este</span>
-        <span class="c1"># último, se sobrescribe.</span>
+        <span class="c1"># Si no existe ningún valor histórico, se almacena el actual. Si ya </span>
+        <span class="c1"># existe algún valor histórico se compara con el actual y, de ser mejor </span>
+        <span class="c1"># este último, se sobrescribe.</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mejor_valor</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valor</span><span class="p">)</span>
@@ -483,7 +489,7 @@
 
 <span class="sd">        &gt;&gt;&gt; part = Particula(</span>
 <span class="sd">                n_variables = 3,</span>
-<span class="sd">                limites_inf = [-1,2,None],</span>
+<span class="sd">                limites_inf = [-1,2,0],</span>
 <span class="sd">                limites_sup = [4,10,20],</span>
 <span class="sd">                verbose     = True</span>
 <span class="sd">                )</span>

@@ -55,7 +55,7 @@ Ejemplos
         peso_social      = 2,
         parada_temprana  = True,
         rondas_parada    = 5,
-        tolerancia_parada = 10**-3,
+        tolerancia_parada = 10**-8,
         verbose          = False
     )
     
