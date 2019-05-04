@@ -673,7 +673,7 @@
             
             <span class="c1"># EVALUAR PARTÍCULAS DEL ENJAMBRE</span>
             <span class="c1"># ------------------------------------------------------------------</span>
-            <span class="n">enjambre</span><span class="o">.</span><span class="n">evaluar_enjambre</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">evaluar_enjambre</span><span class="p">(</span>
                 <span class="n">funcion_objetivo</span> <span class="o">=</span> <span class="n">funcion_objetivo</span><span class="p">,</span>
                 <span class="n">optimizacion</span>     <span class="o">=</span> <span class="s2">&quot;minimizar&quot;</span><span class="p">,</span>
                 <span class="n">verbose</span>          <span class="o">=</span> <span class="n">verbose</span>
@@ -722,7 +722,7 @@
                           <span class="o">*</span> <span class="p">(</span><span class="n">n_iteraciones</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="n">n_iteraciones</span><span class="p">)</span> \
                           <span class="o">+</span> <span class="n">inercia_min</span>
            
-            <span class="n">enjambre</span><span class="o">.</span><span class="n">mover_enjambre</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mover_enjambre</span><span class="p">(</span>
                <span class="n">inercia</span>        <span class="o">=</span> <span class="n">inercia</span><span class="p">,</span>
                <span class="n">peso_cognitivo</span> <span class="o">=</span> <span class="n">peso_cognitivo</span><span class="p">,</span>
                <span class="n">peso_social</span>    <span class="o">=</span> <span class="n">peso_social</span><span class="p">,</span>
