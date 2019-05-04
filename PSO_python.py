@@ -947,7 +947,7 @@ class Enjambre:
             
             # EVALUAR PARTÍCULAS DEL ENJAMBRE
             # ------------------------------------------------------------------
-            enjambre.evaluar_enjambre(
+            self.evaluar_enjambre(
                 funcion_objetivo = funcion_objetivo,
                 optimizacion     = "minimizar",
                 verbose          = verbose
@@ -996,7 +996,7 @@ class Enjambre:
                           * (n_iteraciones-i)/n_iteraciones) \
                           + inercia_min
            
-            enjambre.mover_enjambre(
+            self.mover_enjambre(
                inercia        = inercia,
                peso_cognitivo = peso_cognitivo,
                peso_social    = peso_social,
