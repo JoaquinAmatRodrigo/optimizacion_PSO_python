@@ -349,7 +349,7 @@ class Particula:
             coeficiente social. (default is 2)
 
         verbose : `bool`, optional
-            mostrar información de la partícula creada. (default is ``False``)
+            mostrar información del proceso por pantalla. (default is ``False``)
           
         Examples
         --------
@@ -451,7 +451,7 @@ class Enjambre:
         el valor (+10**3).
 
     verbose : `bool`, optional
-        mostrar información de la partícula creada. (default is ``False``)
+        mostrar información del proceso por pantalla. (default is ``False``)
 
     Attributes
     ----------
@@ -508,7 +508,7 @@ class Enjambre:
         número de iteraciones de optimizacion.
 
     verbose : `bool`, optional
-        mostrar información de la partícula creada. (default is ``False``)
+        mostrar información del proceso por pantalla. (default is ``False``)
 
     Examples
     --------
@@ -694,7 +694,7 @@ class Enjambre:
             el mayor o el menor valorque ha tenido hasta el momento.
 
         verbose : `bool`, optional
-            mostrar información de la partícula creada. (default is ``False``)
+            mostrar información del proceso por pantalla. (default is ``False``)
         
         Examples
         --------
@@ -782,7 +782,7 @@ class Enjambre:
             coeficiente social.
 
         verbose : `bool`, optional
-            mostrar información de la partícula creada. (default is ``False``)
+            mostrar información del proceso por pantalla. (default is ``False``)
         
         """
 
@@ -864,7 +864,7 @@ class Enjambre:
             para considerar que hay cambio. (default is ``None``)
 
          verbose : `bool`, optional
-            mostrar información de la partícula creada. (default is ``False``)
+            mostrar información del proceso por pantalla. (default is ``False``)
         
         Raises
         ------
